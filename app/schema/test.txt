@@ -1,0 +1,21 @@
+yws/
+├── app/
+│   ├── controllers/
+│   ├   ├ Home.php
+│   ├── models/
+│   └── views/
+│   └   ├ home/index.php
+│   └── config/
+│   └  ├ config.php (database connection)
+│   └── core/
+│   └   ├ App.php
+│   └   ├ Controller.php
+│   └   ├ Database.php
+│   └── schema/
+│   └── init.php
+└── public/
+│    ├── css/
+│    ├  ├ home.css
+│    ├── js/
+│___index.php
+

@@ -1,0 +1,1 @@
+gk ngerti la 
