@@ -4,7 +4,7 @@
             <div class="col-md-6 text-center">
                 <h2>Login</h2>
                 <br>
-                <form action="#" method="POST">
+                <form action="<?=BASE_URL; ?>/login/loginProcess" method="POST">
                     <div class="form-group">
                         <label for="username">Username</label>
                         <input type="text" class="form-control" id="username" name="username" required>

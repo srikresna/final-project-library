@@ -2,11 +2,16 @@ yws/
 ├── app/
 │   ├── controllers/
 │   ├   ├ HomeController.php
+│   ├   ├ TeamController.php
+│   ├   ├ LoginController.php
 │   ├── models/
+│   ├   ├ UserModel.php
 │   └── views/
 │   └   ├ home/index.php
-│   └   ├ home/team.php
-│   └   ├ home/login.php
+│   └   ├ team/index.php
+│   └   ├ login/index.php
+│   └   ├ staff/index.php
+│   └   ├ patron/index.php
 │   └── config/
 │   └  ├ config.php (database connection)
 │   └── core/
@@ -17,7 +22,7 @@ yws/
 │   └── init.php
 └── public/
 │    ├── css/
-│    ├  ├ home.css
-│    ├── js/
-│___index.php
+│    ├  ├ bootstrap.min.css
+│__ index.php
+|__ .htaccess
 

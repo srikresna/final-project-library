@@ -18,10 +18,10 @@
                         <a class="nav-link active" aria-current="page" href="<?=BASE_URL; ?>/home">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?=BASE_URL; ?>/home/login">Login</a>
+                        <a class="nav-link" href="<?=BASE_URL; ?>/login">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?=BASE_URL; ?>/home/team">Team</a>
+                        <a class="nav-link" href="<?=BASE_URL; ?>/team">Team</a>
                     </li>
                 </ul>
             </div>
