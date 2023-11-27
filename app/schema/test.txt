@@ -1,10 +1,12 @@
 yws/
 ├── app/
 │   ├── controllers/
-│   ├   ├ Home.php
+│   ├   ├ HomeController.php
 │   ├── models/
 │   └── views/
 │   └   ├ home/index.php
+│   └   ├ home/team.php
+│   └   ├ home/login.php
 │   └── config/
 │   └  ├ config.php (database connection)
 │   └── core/

@@ -11,7 +11,6 @@ class Database {
     private $stmt;
 
     public function __construct() {
-        // Data Source Name
         $dsn = 'sqlsrv:Server=' . $this->host . ';Database=' . $this->name;
 
         // Options
