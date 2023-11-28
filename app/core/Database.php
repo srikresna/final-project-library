@@ -16,7 +16,8 @@ class Database {
         $dsn = 'sqlsrv:Server=' . $this->host . ';Database=' . $this->name;
 
         $option = [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_AUTOCOMMIT => false
         ];
 
         try {
@@ -60,6 +61,16 @@ class Database {
         return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    
+    public function commit() {
+        $this->db->commit();
+    }
 
+    public function beginTransaction() {
+        $this->db->beginTransaction();
+    }
+
+    public function rollback() {
+        $this->db->rollback();
+    }
 }
+
