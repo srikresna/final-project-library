@@ -1,7 +1,9 @@
 <?php
 
-class Patron extends Controller {
-    public function index() {
+class Patron extends Controller
+{
+    public function index()
+    {
         session_start();
         if ($_SESSION['role'] != 'Patron') {
             header('Location: ' . BASE_URL . '/login');
@@ -9,10 +11,84 @@ class Patron extends Controller {
         }
 
         $data['title'] = 'Patron Dashboard';
-        $this->view('templates/header', $data);
+        $this->view('templates/headerPatron', $data);
         $this->view('patron/index', $data);
-        echo "Patron Dashboard";
-        echo "<br>";
-        echo "Hello, " . $_SESSION['username'];
+    }
+
+    public function bookshelf()
+    {
+        session_start();
+        if ($_SESSION['role'] != 'Patron') {
+            header('Location: ' . BASE_URL . '/login');
+            exit;
+        }
+
+        // send all books to view
+        $data['books'] = $this->model('BookModel')->getAllDataBook();
+
+        $data['title'] = 'Bookshelf';
+        $this->view('templates/headerPatron', $data);
+        $this->view('patron/bookshelf', $data);
+    }
+
+    public function reservation()
+    {
+        session_start();
+        if ($_SESSION['role'] != 'Patron') {
+            header('Location: ' . BASE_URL . '/login');
+            exit;
+        }   
+
+        $data['sessionID'] = $this->model('UserModel')->getIDUser($_SESSION['username']);
+
+        if ($_SESSION['role'] == 'Patron') {
+             $data['userID'] = $data['sessionID'][0]['PatronId'];
+        } else {
+             $data['userID'] = $data['sessionID'][0]['LibraryStaffId'];
+        }
+
+        $data['book'] = $this->model('BookModel')-> getBookReserved($data['userID']);
+        $data['date'] = $this->model('ReservationModel')->getOlderReservation($data['userID']);
+
+        $data['title'] = 'Reservation';
+
+        $this->view('templates/headerPatron', $data);   
+        $this->view('patron/reservation', $data);
+
+    }
+
+    public function loan()
+    {
+        session_start();
+        if ($_SESSION['role'] != 'Patron') {
+            header('Location: ' . BASE_URL . '/login');
+            exit;
+        }
+
+        $data['title'] = 'Loan';
+        $this->view('templates/headerPatron', $data);
+        $this->view('patron/loan', $data);
+    }
+
+    public function return()
+    {
+        session_start();
+        if ($_SESSION['role'] != 'Patron') {
+            header('Location: ' . BASE_URL . '/login');
+            exit;
+        }
+
+        $data['title'] = 'Return';
+        $this->view('templates/headerPatron', $data);
+        $this->view('patron/return', $data);
+    }
+
+    public function logout()
+    {
+        session_start();
+        session_unset();
+        session_destroy();
+        header('Location: ' . BASE_URL . '/login');
+        exit;
     }
 }

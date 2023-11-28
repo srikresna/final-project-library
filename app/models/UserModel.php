@@ -26,4 +26,13 @@ class UserModel extends Database{
         $this->connect->execute();
         return $this->connect->resultSet();
     }
+
+    public function getIDUser($username) {
+        $username = $this->sanitizeInput($username);
+        $query = "SELECT * FROM $this->table WHERE username = :username";
+        $this->connect->query($query);
+        $this->connect->bind('username', $username);
+        $this->connect->execute();
+        return $this->connect->resultSet();
+    }
 }

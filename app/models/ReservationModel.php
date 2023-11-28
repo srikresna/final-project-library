@@ -35,5 +35,13 @@ class ReservationModel {
         $this->connect->execute();
         return $this->connect->resultSet();
     }
+
+    public function getOlderReservation($patronID) {
+        $query = "SELECT ReservationDate FROM $this->table WHERE PatronID = :patronID";
+        $this->connect->query($query);
+        $this->connect->bind('patronID', $patronID);
+        $this->connect->execute();
+        return $this->connect->resultSet();
+    }
 }
 

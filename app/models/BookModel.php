@@ -98,6 +98,15 @@ class BookModel {
         $this->connect->execute();
         return $this->connect->resultSet();
     }
+
+    public function getBookReserved($patronID) {
+        $query = "SELECT * FROM $this->table WHERE BookID IN (SELECT BookID FROM [Reservation] WHERE PatronID = :patronID)";
+        $this->connect->query($query);
+        $this->connect->bind('patronID', $patronID);
+        $this->connect->execute();
+        return $this->connect->resultSet();
+    }
+    
 }
 
 ?>

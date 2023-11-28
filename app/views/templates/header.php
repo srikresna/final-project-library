@@ -11,8 +11,8 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Library</a>
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <a class="navbar-brand" href="<?=BASE_URL; ?>/home">Library</a>
+            <div class="navbar-expand">
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="<?=BASE_URL; ?>/home">Home</a>
