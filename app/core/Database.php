@@ -16,8 +16,7 @@ class Database {
         $dsn = 'sqlsrv:Server=' . $this->host . ';Database=' . $this->name;
 
         $option = [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_AUTOCOMMIT => false
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
         ];
 
         try {
