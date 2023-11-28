@@ -43,18 +43,18 @@ INSERT INTO [dbo].[LibraryStaff] ([FirstName], [LastName], [Email], [PhoneNumber
 VALUES ('Bambang', 'Sutopo', 'sutopobambang@mail.com', '081234567894'),
         ('Nurhadi', 'Sudjatmiko', 'jadmikoadi@mail.com', '081234567895');
 
-INSERT INTO [dbo].[User] ([Username], [Password], [Role])
-VALUES ('bambang', 'admin', 'LibraryStaff'),
-         ('nurhadi', 'admin', 'LibraryStaff'),
-         ('gareng', 'gareng', 'Patron'),
-         ('petruk', 'petruk', 'Patron'),
-         ('bagong', 'bagong', 'Patron'),
-         ('semar', 'semar', 'Patron');
+-- INSERT INTO [dbo].[User] ([Username], [Password], [Role])
+-- VALUES ('bambang', 'admin', 'LibraryStaff'),
+--          ('nurhadi', 'admin', 'LibraryStaff'),
+--          ('gareng', 'gareng', 'Patron'),
+--          ('petruk', 'petruk', 'Patron'),
+--          ('bagong', 'bagong', 'Patron'),
+--          ('semar', 'semar', 'Patron');
 
--- INSERT INTO [dbo].[User] ([Username], [Password], [LibraryStaffId], [PatronId])
--- VALUES ('bambang', 'admin', 1, NULL),
---          ('nurhadi', 'admin', 2, NULL),
---          ('gareng', 'gareng', NULL, 1),
---          ('petruk', 'petruk', NULL, 2),
---          ('bagong', 'bagong', NULL, 3),
---          ('semar', 'semar', NULL, 4);
+INSERT INTO [dbo].[User] ([Username], [Password], [Role], [LibraryStaffId], [PatronId])
+VALUES ('bambang', 'admin', 'LibraryStaff', 1, NULL),
+         ('nurhadi', 'admin', 'LibraryStaff', 2, NULL),
+         ('gareng', 'gareng', 'Patron', NULL, 1),
+         ('petruk', 'petruk', 'Patron', NULL, 2),
+         ('bagong', 'bagong', 'Patron', NULL, 3),
+         ('semar', 'semar', 'Patron', NULL, 4);

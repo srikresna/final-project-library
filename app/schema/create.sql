@@ -75,8 +75,8 @@ CREATE TABLE
     [Username] VARCHAR(100) NOT NULL,
     [Password] VARCHAR(100) NOT NULL,
     [Role] VARCHAR(15) NOT NULL,
-    -- [LibraryStaffId] INT NULL,
-    -- [PatronId] INT NULL,
+    [LibraryStaffId] INT NULL,
+    [PatronId] INT NULL,
     CONSTRAINT [PK_User] PRIMARY KEY ([UserId])
 );
 
@@ -101,13 +101,13 @@ ALTER TABLE
     [dbo].[Reservation] ADD CONSTRAINT [FK_Reservation_Patron]
     FOREIGN KEY ([PatronId]) REFERENCES [dbo].[Patron] ([PatronId]) ON DELETE CASCADE ON UPDATE CASCADE;
 
--- ALTER TABLE
---     [dbo].[User] ADD CONSTRAINT [FK_User_LibraryStaff]
---     FOREIGN KEY ([LibraryStaffId]) REFERENCES [dbo].[LibraryStaff] ([LibraryStaffId]) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE
+    [dbo].[User] ADD CONSTRAINT [FK_User_LibraryStaff]
+    FOREIGN KEY ([LibraryStaffId]) REFERENCES [dbo].[LibraryStaff] ([LibraryStaffId]) ON DELETE CASCADE ON UPDATE CASCADE;
 
--- ALTER TABLE
---     [dbo].[User] ADD CONSTRAINT [FK_User_Patron]
---     FOREIGN KEY ([PatronId]) REFERENCES [dbo].[Patron] ([PatronId]) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE
+    [dbo].[User] ADD CONSTRAINT [FK_User_Patron]
+    FOREIGN KEY ([PatronId]) REFERENCES [dbo].[Patron] ([PatronId]) ON DELETE CASCADE ON UPDATE CASCADE;
 
 
 
