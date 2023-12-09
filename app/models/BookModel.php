@@ -1,6 +1,7 @@
 <?php
 
-class BookModel {
+class BookModel
+{
     private $table = '[Book]';
     private $connect;
 
@@ -9,48 +10,49 @@ class BookModel {
         $this->connect = new Database();
     }
 
-    public function sanitizeInput($data) {
+    public function sanitizeInput($data)
+    {
         $data = htmlspecialchars($data);
         $data = stripslashes($data);
         $data = trim($data);
         return $data;
     }
 
-    public function getAllDataBook() {
+    public function getAllDataBook()
+    {
         $query = "SELECT * FROM $this->table";
         $this->connect->query($query);
         $this->connect->execute();
         return $this->connect->resultSet();
     }
 
-    public function getBookByTitle($data) {
-        $title = $this->sanitizeInput($data['Title']);
-        $query = "SELECT * FROM $this->table WHERE Title = :title";
-        $this->connect->query($query);
-        $this->connect->bind('title', $title);
+    public function getBookByTitle($data)
+    {
+        $data = $this->sanitizeInput($data);
+        $this->connect->query("SELECT * FROM $this->table WHERE Title LIKE :keyword");
+        $this->connect->bind(':keyword', "%$data%");
         $this->connect->execute();
         return $this->connect->resultSet();
     }
 
     public function getBookByAuthor($data) {
-        $author = $this->sanitizeInput($data['Author']);
-        $query = "SELECT * FROM $this->table WHERE Author = :author";
-        $this->connect->query($query);
-        $this->connect->bind('author', $author);
+        $data = $this->sanitizeInput($data);
+        $this->connect->query("SELECT * FROM $this->table WHERE Author LIKE :keyword");
+        $this->connect->bind(':keyword', "%$data%");
         $this->connect->execute();
         return $this->connect->resultSet();
     }
 
     public function getBookByISBN($data) {
-        $isbn = $this->sanitizeInput($data['ISBN']);
-        $query = "SELECT * FROM $this->table WHERE ISBN = :isbn";
-        $this->connect->query($query);
-        $this->connect->bind('isbn', $isbn);
+        $data = $this->sanitizeInput($data);
+        $this->connect->query("SELECT * FROM $this->table WHERE ISBN LIKE :keyword");
+        $this->connect->bind(':keyword', "%$data%");
         $this->connect->execute();
         return $this->connect->resultSet();
     }
 
-    public function addNewBook($data) {
+    public function addNewBook($data)
+    {
         $isbn = $this->sanitizeInput($data['ISBN']);
         $title = $this->sanitizeInput($data['Title']);
         $author = $this->sanitizeInput($data['Author']);
@@ -71,7 +73,8 @@ class BookModel {
         return $this->connect->resultSet();
     }
 
-    public function getQuantity($data) {
+    public function getQuantity($data)
+    {
         $bookID = $this->sanitizeInput($data['BookID']);
         $query = "SELECT QuantityAvailable FROM $this->table WHERE BookID = :bookID";
         $this->connect->query($query);
@@ -80,7 +83,8 @@ class BookModel {
         return $this->connect->resultSet();
     }
 
-    public function updateQuantity($data, $newQuantity) {
+    public function updateQuantity($data, $newQuantity)
+    {
         $bookID = $this->sanitizeInput($data['BookID']);
         $query = "UPDATE $this->table SET QuantityAvailable = :newQuantity WHERE BookID = :bookID";
         $this->connect->query($query);
@@ -91,7 +95,8 @@ class BookModel {
     }
 
     // DB function to check if a book is available
-    public function checkBookAvailability($bookID) {
+    public function checkBookAvailability($bookID)
+    {
         $query = "SELECT QuantityAvailable FROM $this->table WHERE BookID = :bookID";
         $this->connect->query($query);
         $this->connect->bind('bookID', $bookID);
@@ -99,14 +104,12 @@ class BookModel {
         return $this->connect->resultSet();
     }
 
-    public function getBookReserved($patronID) {
+    public function getBookReserved($patronID)
+    {
         $query = "SELECT * FROM $this->table WHERE BookID IN (SELECT BookID FROM [Reservation] WHERE PatronID = :patronID)";
         $this->connect->query($query);
         $this->connect->bind('patronID', $patronID);
         $this->connect->execute();
         return $this->connect->resultSet();
     }
-    
 }
-
-?>

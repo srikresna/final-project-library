@@ -6,14 +6,18 @@
             <h2>Available Books</h2>
         </div>
         <div class="col-md-6">
-            <div class="form-group">
-                <div class="input-group">
-                    <input type="text" class="form-control" id="search" placeholder="Search">
-                    <div class="input-group-append">
-                        <button type="button" class="btn btn-primary" id="searchBtn">Search</button>
-                    </div>
+            <form action="<?= BASE_URL; ?>/patron/bookshelf" method="post">
+                <div class="input-group mb-3">
+                    <input id="search-input" type="text" name="keyword" class="form-control" placeholder="Search by Title" aria-label="Text input with dropdown button">
+                    <input id="search-type" type="hidden" name="type" value="title">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Search by</button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#" data-type="title">Title</a></li>
+                        <li><a class="dropdown-item" href="#" data-type="isbn">ISBN</a></li>
+                        <li><a class="dropdown-item" href="#" data-type="author">Author</a></li>
+                    </ul>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 
@@ -47,4 +51,15 @@
             <?php endforeach; ?>
         </tbody>
     </table>
+
+    <script>
+        document.querySelectorAll('.dropdown-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('search-input').placeholder = 'Search by ' + this.innerText;
+                document.getElementById('search-type').value = this.dataset.type;
+            });
+        });
+    </script>
+
 </div>
