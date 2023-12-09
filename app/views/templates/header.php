@@ -11,17 +11,20 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="<?=BASE_URL; ?>/home">Library</a>
-            <div class="navbar-expand">
+            <a class="navbar-brand" href="<?= BASE_URL; ?>/home">Library</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="<?=BASE_URL; ?>/home">Home</a>
+                        <a class="nav-link active" aria-current="page" href="<?= BASE_URL; ?>/home">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?=BASE_URL; ?>/login">Login</a>
+                        <a class="nav-link" href="<?= BASE_URL; ?>/login">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?=BASE_URL; ?>/team">Team</a>
+                        <a class="nav-link" href="<?= BASE_URL; ?>/team">Team</a>
                     </li>
                 </ul>
             </div>
