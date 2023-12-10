@@ -73,25 +73,26 @@ class BookModel
         return $this->connect->resultSet();
     }
 
-    public function getQuantity($data)
+    public function getQuantity($bookId)
     {
-        $bookID = $this->sanitizeInput($data['BookID']);
-        $query = "SELECT QuantityAvailable FROM $this->table WHERE BookID = :bookID";
+        $bookId = $this->sanitizeInput($bookId);
+        $query = "SELECT QuantityAvailable FROM $this->table WHERE BookId = :bookId";
         $this->connect->query($query);
-        $this->connect->bind('bookID', $bookID);
+        $this->connect->bind('bookId', $bookId);
         $this->connect->execute();
-        return $this->connect->resultSet();
+        $result = $this->connect->single();
+        return $result['QuantityAvailable'];
     }
 
-    public function updateQuantity($data, $newQuantity)
+    public function updateQuantity($bookId, $newQuantity)
     {
-        $bookID = $this->sanitizeInput($data['BookID']);
-        $query = "UPDATE $this->table SET QuantityAvailable = :newQuantity WHERE BookID = :bookID";
+        $bookId = $this->sanitizeInput($bookId);
+        $query = "UPDATE $this->table SET QuantityAvailable = :newQuantity WHERE BookId = :bookId";
         $this->connect->query($query);
-        $this->connect->bind('bookID', $bookID);
+        $this->connect->bind('bookId', $bookId);
         $this->connect->bind('newQuantity', $newQuantity);
         $this->connect->execute();
-        return $this->connect->resultSet();
+        return $this->connect->rowCount();
     }
 
     // DB function to check if a book is available
@@ -100,15 +101,6 @@ class BookModel
         $query = "SELECT QuantityAvailable FROM $this->table WHERE BookID = :bookID";
         $this->connect->query($query);
         $this->connect->bind('bookID', $bookID);
-        $this->connect->execute();
-        return $this->connect->resultSet();
-    }
-
-    public function getBookReserved($patronID)
-    {
-        $query = "SELECT * FROM $this->table WHERE BookID IN (SELECT BookID FROM [Reservation] WHERE PatronID = :patronID)";
-        $this->connect->query($query);
-        $this->connect->bind('patronID', $patronID);
         $this->connect->execute();
         return $this->connect->resultSet();
     }

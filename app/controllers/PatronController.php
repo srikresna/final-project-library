@@ -38,6 +38,7 @@ class Patron extends Controller
         }
 
 
+
         $data['title'] = 'Bookshelf';
         $this->view('templates/headerPatron', $data);
         $this->view('patron/bookshelf', $data);
@@ -59,8 +60,7 @@ class Patron extends Controller
             $data['userID'] = $data['sessionID'][0]['LibraryStaffId'];
         }
 
-        $data['book'] = $this->model('BookModel')->getBookReserved($data['userID']);
-        $data['date'] = $this->model('ReservationModel')->getOlderReservation($data['userID']);
+        $data['reserve'] = $this->model('ReservationModel')->getOlderReservation($data['userID']);
 
         $data['title'] = 'Reservation';
 
@@ -75,6 +75,23 @@ class Patron extends Controller
             header('Location: ' . BASE_URL . '/login');
             exit;
         }
+
+        $data['sessionID'] = $this->model('UserModel')->getIDUser($_SESSION['username']);
+
+        if ($_SESSION['role'] == 'Patron') {
+            $data['userID'] = $data['sessionID'][0]['PatronId'];
+        } else {
+            $data['userID'] = $data['sessionID'][0]['LibraryStaffId'];
+        }
+
+        if (isset($_POST['isbn'])) {
+            $isbn = $_POST['isbn'];
+            $data['targetedBook'] = $this->model('BookModel')->getBookByISBN($isbn);
+            $data['targetedBook'][0]['PatronId'] = $data['userID'];
+            $this->model('LoanModel')->addNewLoan($data['targetedBook'][0]);
+        }
+
+        $data['loans'] = $this->model('LoanModel')->getOlderLoan($data['userID']);
 
         $data['title'] = 'Loan';
         $this->view('templates/headerPatron', $data);

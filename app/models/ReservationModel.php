@@ -37,7 +37,9 @@ class ReservationModel {
     }
 
     public function getOlderReservation($patronID) {
-        $query = "SELECT ReservationDate FROM $this->table WHERE PatronID = :patronID";
+        $query = "SELECT Reservation.*, Book.Title FROM $this->table 
+        JOIN Book ON Reservation.BookId = Book.BookId 
+        WHERE Reservation.PatronID = :patronID";
         $this->connect->query($query);
         $this->connect->bind('patronID', $patronID);
         $this->connect->execute();

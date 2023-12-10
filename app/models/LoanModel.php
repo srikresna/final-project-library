@@ -1,6 +1,7 @@
 <?php
 
-class LoanModel{
+class LoanModel
+{
     private $table = '[Loan]';
     private $connect;
 
@@ -9,48 +10,51 @@ class LoanModel{
         $this->connect = new Database();
     }
 
-    public function sanitizeInput($data) {
+    public function sanitizeInput($data)
+    {
         $data = htmlspecialchars($data);
         $data = stripslashes($data);
         $data = trim($data);
         return $data;
     }
 
-    public function getAllDataLoan() {
+    public function getAllDataLoan()
+    {
         $query = "SELECT * FROM $this->table";
         $this->connect->query($query);
         $this->connect->execute();
         return $this->connect->resultSet();
     }
 
-    public function addNewLoan($data) {
-        $bookID = $this->sanitizeInput($data['BookID']);
-        $patronID = $this->sanitizeInput($data['PatronID']);
+    public function addNewLoan($data)
+    {
+        $bookId = $this->sanitizeInput($data['BookId']);
+        $patronId = $this->sanitizeInput($data['PatronId']);
 
         // Lock the book record to prevent concurrent updates
         $this->connect->beginTransaction();
 
         // Check if the book is available
         $bookModel = new BookModel();
-        $currentQuantity = $bookModel->getQuantity($bookID);
+        $currentQuantity = $bookModel->getQuantity($bookId);
 
         if ($currentQuantity > 0) {
             // Update the book quantity and add the loan record
             $newQuantity = $currentQuantity - 1;
-            $bookModel->updateQuantity($bookID, $newQuantity);
+            $bookModel->updateQuantity($bookId, $newQuantity);
 
             $loanDate = date("Y-m-d");
             $dueDate = date("Y-m-d", strtotime($loanDate . '+ 7 days'));
-            $query = "INSERT INTO $this->table VALUES (:BookID, :patronID, :loanDate, :dueDate)";
+            $query = "INSERT INTO $this->table (BookId, PatronId, LoanDate, DueDate) VALUES (:bookId, :patronId, :loanDate, :dueDate)";
             $this->connect->query($query);
-            $this->connect->bind('BookID', $bookID);
-            $this->connect->bind('patronID', $patronID);
+            $this->connect->bind('bookId', $bookId);
+            $this->connect->bind('patronId', $patronId);
             $this->connect->bind('loanDate', $loanDate);
             $this->connect->bind('dueDate', $dueDate);
             $this->connect->execute();
             $this->connect->commit();
 
-            return $this->connect->resultSet();
+            return $this->connect->lastInsertId();
         } else {
             // Book is not available, rollback the transaction
             $this->connect->rollback();
@@ -58,47 +62,70 @@ class LoanModel{
         }
     }
 
-    public function returnBook($data) {
-        $bookID = $this->sanitizeInput($data['BookID']);
-        $patronID = $this->sanitizeInput($data['PatronID']);
+    public function returnBook($data)
+    {
+        $bookId = $this->sanitizeInput($data['BookId']);
+        $patronId = $this->sanitizeInput($data['PatronId']);
         $return = $this->sanitizeInput($data['ReturnDate']);
-        $query = "UPDATE $this->table SET ReturnDate = :return WHERE BookID = :bookID AND PatronID = :patronID";
+        $query = "UPDATE $this->table SET ReturnDate = :return WHERE bookId = :bookId AND patronId = :patronId";
         $this->connect->query($query);
-        $this->connect->bind('bookID', $bookID);
-        $this->connect->bind('patronID', $patronID);
+        $this->connect->bind('bookId', $bookId);
+        $this->connect->bind('patronId', $patronId);
         $this->connect->bind('return', $return);
         $this->connect->execute();
         return $this->connect->resultSet();
 
         $bookModel = new BookModel();
-        $currentQuantity = $bookModel->getQuantity($bookID);
+        $currentQuantity = $bookModel->getQuantity($bookId);
 
         $newQuantity = $currentQuantity + 1;
 
-        $bookModel->updateQuantity($bookID, $newQuantity);
+        $bookModel->updateQuantity($bookId, $newQuantity);
     }
 
-    public function checkOverdueLoans() {
+    public function checkOverdueLoans()
+    {
         $query = "SELECT * FROM $this->table WHERE DueDate < CURDATE() AND ReturnDate IS NULL";
         $this->connect->query($query);
         $this->connect->execute();
         $overdueLoans = $this->connect->resultSet();
-    
+
         $fineModel = new FineModel();
-    
+
         foreach ($overdueLoans as $loan) {
-            $patronID = $loan['PatronID'];
+            $patronId = $loan['PatronId'];
             $amount = 10000;
             $status = "Unpaid";
             $due = date("Y-m-d", strtotime($loan['DueDate'] . '+ 7 days'));
-    
-            $fineModel->addNewFine($patronID, $amount, $status, $due);
+
+            $fineModel->addNewFine($patronId, $amount, $status, $due);
         }
-    
+
         $query = "UPDATE $this->table SET ReturnDate = CURDATE() WHERE DueDate < CURDATE() AND ReturnDate IS NULL";
         $this->connect->query($query);
         $this->connect->execute();
-    
+
+        return $this->connect->resultSet();
+    }
+
+    public function getOlderLoan($patronId)
+    {
+        $query = "SELECT Loan.*, Book.Title, Book.ISBN FROM $this->table 
+        JOIN Book ON Loan.BookId = Book.BookId 
+        WHERE Loan.PatronId = :patronId 
+        ORDER BY Loan.LoanDate DESC";
+        $this->connect->query($query);
+        $this->connect->bind('patronId', $patronId);
+        $this->connect->execute();
+        return $this->connect->resultSet();
+    }
+
+    public function getnotReturnedLoanByISBN($isbn)
+    {
+        $query = "SELECT * FROM $this->table WHERE ISBN = :isbn AND ReturnDate IS NULL";
+        $this->connect->query($query);
+        $this->connect->bind('isbn', $isbn);
+        $this->connect->execute();
         return $this->connect->resultSet();
     }
 }

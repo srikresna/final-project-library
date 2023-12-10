@@ -25,14 +25,12 @@
             </tr>
         </thead>
         <tbody>
-        <?php foreach ($data['book'] as $book) : ?>
-            <tr>
-                <td><?php echo $book['Title']; ?></td>
-                <?php foreach ($data['date'] as $date) : ?>
-                    <td><?php echo $date['ReservationDate']; ?></td>
-                <?php endforeach; ?>
-            </tr>
-        <?php endforeach; ?>
+            <?php foreach ($data['reserve'] as $book) : ?>
+                <tr>
+                    <td><?php echo $book['Title']; ?></td>
+                    <td><?php echo $book['ReservationDate']; ?></td>
+                </tr>
+            <?php endforeach; ?>
         </tbody>
     </table>
 </div>
