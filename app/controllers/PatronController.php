@@ -61,8 +61,29 @@ class Patron extends Controller
         }
 
         $data['reserve'] = $this->model('ReservationModel')->getOlderReservation($data['userID']);
-
+        $data['active_reserve'] = $this->model('ReservationModel')->getActiveReservation();
+        $data['loaned'] = $this->model('LoanModel')->getNotReturned();
         $data['title'] = 'Reservation';
+
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_POST['isbn']) && isset($_POST['reservationDate'])) {
+                $isbn = $_POST['isbn'];
+                $date = $_POST['reservationDate'];
+                $data['targetedBook'] = $this->model('BookModel')->getBookByISBN($isbn);
+                $data['targetedBook'][0]['PatronId'] = $data['userID'];
+                $data['targetedBook'][0]['ReservationDate'] = $date;
+                if ($this->model('ReservationModel')->addNewReservation($data['targetedBook'][0])) {
+                    header('Location: ' . BASE_URL . '/patron/reservation?success=true');
+                } else {
+                    header('Location: ' . BASE_URL . '/patron/reservation?error=date_taken');
+                }
+                exit;
+            } else {
+                header('Location: ' . BASE_URL . '/patron/reservation?success=false');
+                exit;
+            }
+        }
 
         $this->view('templates/headerPatron', $data);
         $this->view('patron/reservation', $data);
@@ -120,3 +141,5 @@ class Patron extends Controller
         exit;
     }
 }
+
+

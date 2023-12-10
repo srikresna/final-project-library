@@ -120,11 +120,14 @@ class LoanModel
         return $this->connect->resultSet();
     }
 
-    public function getnotReturnedLoanByISBN($isbn)
+    public function getNotReturned()
     {
-        $query = "SELECT * FROM $this->table WHERE ISBN = :isbn AND ReturnDate IS NULL";
+        // dapatkan judul buku, nama peminjam, dan tanggal peminjaman
+        $query = "SELECT Loan.*, Book.Title, Patron.FirstName FROM $this->table
+        JOIN Book ON Loan.BookId = Book.BookId
+        JOIN Patron ON Loan.PatronId = Patron.PatronId
+        WHERE Loan.ReturnDate IS NULL";
         $this->connect->query($query);
-        $this->connect->bind('isbn', $isbn);
         $this->connect->execute();
         return $this->connect->resultSet();
     }

@@ -93,7 +93,7 @@
 
 <!-- modal borrow -->
 <div class="modal fade" id="borrowModal" tabindex="-1" aria-labelledby="borrowModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="borrowModalLabel">Confirm Borrow</h5>
@@ -115,7 +115,7 @@
 
 <!-- modal reserve -->
 <div class="modal fade" id="reserveModal" tabindex="-1" aria-labelledby="reserveModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="reserveModalLabel">Confirm Reserve</h5>
