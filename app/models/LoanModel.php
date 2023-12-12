@@ -20,7 +20,9 @@ class LoanModel
 
     public function getAllDataLoan()
     {
-        $query = "SELECT * FROM $this->table";
+        $query = "SELECT Loan.*, Book.Title, Book.ISBN, Patron.FirstName FROM $this->table
+        JOIN Book ON Loan.BookId = Book.BookId
+        JOIN Patron ON Loan.PatronId = Patron.PatronId";
         $this->connect->query($query);
         $this->connect->execute();
         return $this->connect->resultSet();
@@ -128,6 +130,42 @@ class LoanModel
         JOIN Patron ON Loan.PatronId = Patron.PatronId
         WHERE Loan.ReturnDate IS NULL";
         $this->connect->query($query);
+        $this->connect->execute();
+        return $this->connect->resultSet();
+    }
+
+    public function getLoanByTitle($data)
+    {
+        $query = "SELECT Loan.*, Book.Title, Book.ISBN, Patron.FirstName FROM $this->table
+        JOIN Book ON Loan.BookId = Book.BookId
+        JOIN Patron ON Loan.PatronId = Patron.PatronId
+        WHERE Title LIKE :keyword";
+        $this->connect->query($query);
+        $this->connect->bind(':keyword', "%$data%");
+        $this->connect->execute();
+        return $this->connect->resultSet();
+    }
+
+    public function getLoanByISBN($data)
+    {
+        $query = "SELECT Loan.*, Book.Title, Book.ISBN, Patron.FirstName FROM $this->table
+        JOIN Book ON Loan.BookId = Book.BookId
+        JOIN Patron ON Loan.PatronId = Patron.PatronId
+        WHERE ISBN LIKE :keyword";
+        $this->connect->query($query);
+        $this->connect->bind(':keyword', "%$data%");
+        $this->connect->execute();
+        return $this->connect->resultSet();
+    }
+
+    public function getLoanByPatron($data)
+    {
+        $query = "SELECT Loan.*, Book.Title, Book.ISBN, Patron.FirstName FROM $this->table
+        JOIN Book ON Loan.BookId = Book.BookId
+        JOIN Patron ON Loan.PatronId = Patron.PatronId
+        WHERE FirstName LIKE :keyword";
+        $this->connect->query($query);
+        $this->connect->bind(':keyword', "%$data%");
         $this->connect->execute();
         return $this->connect->resultSet();
     }

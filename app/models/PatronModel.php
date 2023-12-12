@@ -1,6 +1,7 @@
-<?
+<?php
 
-class PatronModel {
+class PatronModel
+{
     private $table = '[Patron]';
     private $connect;
 
@@ -9,21 +10,24 @@ class PatronModel {
         $this->connect = new Database();
     }
 
-    public function sanitizeInput($data) {
+    public function sanitizeInput($data)
+    {
         $data = htmlspecialchars($data);
         $data = stripslashes($data);
         $data = trim($data);
         return $data;
     }
 
-    public function getAllDataPatron() {
+    public function getAllDataPatron()
+    {
         $query = "SELECT * FROM $this->table";
         $this->connect->query($query);
         $this->connect->execute();
         return $this->connect->resultSet();
     }
 
-    public function addNewPatron($data) {
+    public function addNewPatron($data)
+    {
         $fname = $this->sanitizeInput($data['FirstName']);
         $lname = $this->sanitizeInput($data['LastName']);
         $phone = $this->sanitizeInput($data['PhoneNumber']);
@@ -37,4 +41,33 @@ class PatronModel {
         $this->connect->execute();
         return $this->connect->resultSet();
     }
+
+    public function getPatronByFirstName($data)
+    {
+        $data = $this->sanitizeInput($data);
+        $this->connect->query("SELECT * FROM $this->table WHERE FirstName LIKE :keyword");
+        $this->connect->bind(':keyword', "%$data%");
+        $this->connect->execute();
+        return $this->connect->resultSet();
+    }
+
+    public function getPatronByAddress($data)
+    {
+        $data = $this->sanitizeInput($data);
+        $this->connect->query("SELECT * FROM $this->table WHERE Address LIKE :keyword");
+        $this->connect->bind(':keyword', "%$data$");
+        $this->connect->execute();
+        return $this->connect->resultSet();
+    }
+
+    public function getPatronByPhone($data)
+    {
+        $data = $this->sanitizeInput($data);
+        $this->connect->query("SELECT * FROM $this->table WHERE PhoneNumber LIKE :keyword");
+        $this->connect->bind(':keyword', "%$data%");
+        $this->connect->execute();
+        return $this->connect->resultSet();
+    }
 }
+
+?>

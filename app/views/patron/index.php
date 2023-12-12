@@ -26,9 +26,9 @@
         </div>
         <div class="col-md-3">
             <div class="box">
-                <h4>Return</h4>
-                <p>Return your loaned books</p>
-                <a href="<?= BASE_URL; ?>/patron/return" class="btn btn-primary">Go to Return</a>
+                <h4>Information</h4>
+                <p>Show the latest information</p>
+                <a href="<?= BASE_URL; ?>/patron/information" class="btn btn-primary">Go to Information</a>
             </div>
         </div>
     </div>

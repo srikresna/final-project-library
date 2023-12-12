@@ -17,7 +17,9 @@ class ReservationModel {
     }
 
     public function getAllDataReservation() {
-        $query = "SELECT * FROM $this->table";
+        $query = "SELECT Reservation.*, Book.Title, Book.ISBN, Patron.FirstName FROM $this->table
+        JOIN Book ON Reservation.BookId = Book.BookId
+        JOIN Patron ON Reservation.PatronId = Patron.PatronId";
         $this->connect->query($query);
         $this->connect->execute();
         return $this->connect->resultSet();

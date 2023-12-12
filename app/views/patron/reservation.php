@@ -100,10 +100,33 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save Reservation</button>
+                        <button type="submit" class="btn btn-primary" name="submit_res">Save Reservation</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    const submitRes = document.querySelector('#submit_res');
+    const isbn = document.querySelector('#isbn');
+    const reservationDate = document.querySelector('#reservationDate');
+    
+    isbn.addEventListener('input', () => {
+        const regex13 = /^[0-9]{13}$/;
+        if (regex13.test(isbn.value)) {
+            isbn.classList.add('is-valid');
+            isbn.classList.remove('is-invalid');
+            new bootstrap.Popover(isbn);
+
+        } else {
+            isbn.classList.add('is-invalid');
+            isbn.classList.remove('is-valid');
+            new bootstrap.Popover(isbn);
+        }
+    });
+
+    const today = new Date().toISOString().split('T')[0];
+    reservationDate.setAttribute('min', today);
+</script>

@@ -65,7 +65,6 @@ class Patron extends Controller
         $data['loaned'] = $this->model('LoanModel')->getNotReturned();
         $data['title'] = 'Reservation';
 
-
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_POST['isbn']) && isset($_POST['reservationDate'])) {
                 $isbn = $_POST['isbn'];
@@ -119,7 +118,7 @@ class Patron extends Controller
         $this->view('patron/loan', $data);
     }
 
-    public function return()
+    public function information()
     {
         session_start();
         if ($_SESSION['role'] != 'Patron') {
@@ -129,7 +128,7 @@ class Patron extends Controller
 
         $data['title'] = 'Return';
         $this->view('templates/headerPatron', $data);
-        $this->view('patron/return', $data);
+        $this->view('patron/information', $data);
     }
 
     public function logout()
@@ -141,5 +140,3 @@ class Patron extends Controller
         exit;
     }
 }
-
-
