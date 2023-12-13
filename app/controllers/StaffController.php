@@ -341,11 +341,6 @@ class Staff extends Controller
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_POST['firstname'])) {
-                $dataClient = [
-                    'patronId' => $_POST['patronId'],
-                    'date' => $_POST['date']
-                ];
-
                 $bookId = $this->model('BookModel')->getBookByISBN($_POST['isbn']);
                 $reserveId = $this->model('ReservationModel')->getReservationByISBN($_POST['isbn']);
                 $data = [
