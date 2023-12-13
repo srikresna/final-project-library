@@ -53,13 +53,13 @@ class BookModel
 
     public function addNewBook($data)
     {
-        $isbn = $this->sanitizeInput($data['ISBN']);
-        $title = $this->sanitizeInput($data['Title']);
-        $author = $this->sanitizeInput($data['Author']);
-        $genre = $this->sanitizeInput($data['Genre']);
-        $pubyear = $this->sanitizeInput($data['PublicationYear']);
-        $qtyAvail = $this->sanitizeInput($data['QuantityAvailable']);
-        $qtyTotal = $this->sanitizeInput($data['QuantityTotal']);
+        $isbn = $this->sanitizeInput($data['isbn']);
+        $title = $this->sanitizeInput($data['title']);
+        $author = $this->sanitizeInput($data['author']);
+        $genre = $this->sanitizeInput($data['genre']);
+        $pubyear = $this->sanitizeInput($data['publication_year']);
+        $qtyAvail = $this->sanitizeInput($data['quantity_available']);
+        $qtyTotal = $this->sanitizeInput($data['quantity_total']);
         $query = "INSERT INTO $this->table VALUES (:isbn, :title, :author, :genre, :pubyear, :qtyAvail, :qtyTotal)";
         $this->connect->query($query);
         $this->connect->bind('isbn', $isbn);
@@ -70,7 +70,7 @@ class BookModel
         $this->connect->bind('qtyAvail', $qtyAvail);
         $this->connect->bind('qtyTotal', $qtyTotal);
         $this->connect->execute();
-        return $this->connect->resultSet();
+        return $this->connect->rowCount();
     }
 
     public function getQuantity($bookId)
@@ -91,6 +91,38 @@ class BookModel
         $this->connect->query($query);
         $this->connect->bind('bookId', $bookId);
         $this->connect->bind('newQuantity', $newQuantity);
+        $this->connect->execute();
+        return $this->connect->rowCount();
+    }
+
+    public function updateBook($data)
+    {
+        $isbn = $this->sanitizeInput($data['isbn']);
+        $title = $this->sanitizeInput($data['title']);
+        $author = $this->sanitizeInput($data['author']);
+        $genre = $this->sanitizeInput($data['genre']);
+        $pubyear = $this->sanitizeInput($data['publication_year']);
+        $qtyAvail = $this->sanitizeInput($data['quantity_available']);
+        $qtyTotal = $this->sanitizeInput($data['quantity_total']);
+        $query = "UPDATE $this->table SET Title = :title, Author = :author, Genre = :genre, PublicationYear = :pubyear, QuantityAvailable = :qtyAvail, QuantityTotal = :qtyTotal WHERE ISBN = :isbn";
+        $this->connect->query($query);
+        $this->connect->bind('isbn', $isbn);
+        $this->connect->bind('title', $title);
+        $this->connect->bind('author', $author);
+        $this->connect->bind('genre', $genre);
+        $this->connect->bind('pubyear', $pubyear);
+        $this->connect->bind('qtyAvail', $qtyAvail);
+        $this->connect->bind('qtyTotal', $qtyTotal);
+        $this->connect->execute();
+        return $this->connect->rowCount();
+    }
+
+    public function deleteBook($isbn)
+    {
+        $isbn = $this->sanitizeInput($isbn);
+        $query = "DELETE FROM $this->table WHERE ISBN = :isbn";
+        $this->connect->query($query);
+        $this->connect->bind('isbn', $isbn);
         $this->connect->execute();
         return $this->connect->rowCount();
     }

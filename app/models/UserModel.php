@@ -35,4 +35,30 @@ class UserModel extends Database{
         $this->connect->execute();
         return $this->connect->resultSet();
     }
+
+    public function updateUser($data) {
+        $username = $this->sanitizeInput($data['username']);
+        $password = $this->sanitizeInput($data['password']);
+        $query = "UPDATE $this->table SET password = :password WHERE username = :username";
+        $this->connect->query($query);
+        $this->connect->bind('username', $username);
+        $this->connect->bind('password', $password);
+        $this->connect->execute();
+        return $this->connect->rowCount();
+    }
+
+    public function addNewUserPatron($data) {
+        $username = $this->sanitizeInput($data['username']);
+        $password = $this->sanitizeInput($data['password']);
+        $role = $this->sanitizeInput($data['role']);
+        $patronId = $this->sanitizeInput($data['patronId']);
+        $query = "INSERT INTO $this->table (Username, Password, Role, PatronId) VALUES (:username, :password, :role, :patronId)";
+        $this->connect->query($query);
+        $this->connect->bind('username', $username);
+        $this->connect->bind('password', $password);
+        $this->connect->bind('role', $role);
+        $this->connect->bind('patronId', $patronId);
+        $this->connect->execute();
+        return $this->connect->lastInsertId();
+    }
 }

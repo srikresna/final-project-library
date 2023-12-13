@@ -19,8 +19,9 @@ class PatronModel
     }
 
     public function getAllDataPatron()
-    {
-        $query = "SELECT * FROM $this->table";
+    {   
+        $query = "SELECT Patron.*, [User].Username, [User].Password FROM $this->table
+        JOIN [User] ON Patron.PatronId = [User].PatronId";
         $this->connect->query($query);
         $this->connect->execute();
         return $this->connect->resultSet();
@@ -28,18 +29,48 @@ class PatronModel
 
     public function addNewPatron($data)
     {
-        $fname = $this->sanitizeInput($data['FirstName']);
-        $lname = $this->sanitizeInput($data['LastName']);
-        $phone = $this->sanitizeInput($data['PhoneNumber']);
-        $address = $this->sanitizeInput($data['Address']);
-        $query = "INSERT INTO $this->table VALUES (:fname, :lname, :phone, :address)";
+        $fname = $this->sanitizeInput($data['firstname']);
+        $lname = $this->sanitizeInput($data['lastname']);
+        $phone = $this->sanitizeInput($data['phone']);
+        $address = $this->sanitizeInput($data['address']);
+        $mail = $this->sanitizeInput($data['email']);
+        $query = "INSERT INTO $this->table VALUES (:fname, :lname, :phone, :addresses, :mail)";
         $this->connect->query($query);
-        $this->connect->bind('name', $fname);
-        $this->connect->bind('name', $lname);
-        $this->connect->bind('address', $address);
+        $this->connect->bind('fname', $fname);
+        $this->connect->bind('lname', $lname);
         $this->connect->bind('phone', $phone);
+        $this->connect->bind('addresses', $address);
+        $this->connect->bind('mail', $mail);
         $this->connect->execute();
-        return $this->connect->resultSet();
+        
+    }
+
+    public function updatePatron($data)
+    {
+        $fname = $this->sanitizeInput($data['firstname']);
+        $lname = $this->sanitizeInput($data['lastname']);
+        $mail = $this->sanitizeInput($data['email']);
+        $phone = $this->sanitizeInput($data['phonenumber']);
+        $address = $this->sanitizeInput($data['address']);
+        $query = "UPDATE $this->table SET FirstName = :fname, LastName = :lname, Email = :mail, PhoneNumber = :phone, Address = :address WHERE PatronId = :id";
+        $this->connect->query($query);
+        $this->connect->bind('fname', $fname);
+        $this->connect->bind('lname', $lname);
+        $this->connect->bind('mail', $mail);
+        $this->connect->bind('phone', $phone);
+        $this->connect->bind('address', $address);
+        $this->connect->bind('id', $data['patronId']);
+        $this->connect->execute();
+        return $this->connect->rowCount();
+    }
+
+    public function deletePatron($patronId)
+    {
+        $query = "DELETE FROM $this->table WHERE PatronId = :id";
+        $this->connect->query($query);
+        $this->connect->bind('id', $patronId);
+        $this->connect->execute();
+        $this->connect->rowCount();
     }
 
     public function getPatronByFirstName($data)

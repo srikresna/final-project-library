@@ -15,6 +15,7 @@
                 <th>Loan Date</th>
                 <th>Due Date</th>
                 <th>Return Date</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -25,6 +26,13 @@
                     <td><?php echo $loan['LoanDate']; ?></td>
                     <td><?php echo $loan['DueDate']; ?></td>
                     <td><?php echo $loan['ReturnDate']; ?></td>
+                    <td>
+                        <?php if ($loan['ReturnDate'] === null) : ?>
+                            <button class="btn btn-primary">Mark as Returned</button>
+                        <?php else : ?>
+                            Loan Returned
+                        <?php endif; ?>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

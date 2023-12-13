@@ -42,6 +42,76 @@ class Staff extends Controller
         $this->view('staff/bookshelf', $data);
     }
 
+    public function editBook() {
+        session_start();
+        if ($_SESSION['role'] != 'LibraryStaff') {
+            header('Location: ' . BASE_URL . '/login');
+            exit;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_POST['isbn'])) {
+                $data = [
+                    'isbn' => $_POST['isbn'],
+                    'title' => $_POST['title'],
+                    'author' => $_POST['author'],
+                    'genre' => $_POST['genre'],
+                    'publication_year' => $_POST['publication_year'],
+                    'quantity_available' => $_POST['quantity_available'],
+                    'quantity_total' => $_POST['quantity_total']
+                ];
+                $this->model('BookModel')->updateBook($data);
+
+                header('Location: ' . BASE_URL . '/staff/bookshelf');
+                exit;
+            }
+        }
+    }
+
+    public function deleteBook()
+    {
+        session_start();
+        if ($_SESSION['role'] != 'LibraryStaff') {
+            header('Location: ' . BASE_URL . '/login');
+            exit;
+        }
+    
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_POST['isbn'])) {
+                $this->model('BookModel')->deleteBook($_POST['isbn']);
+                header('Location: ' . BASE_URL . '/staff/bookshelf');
+                exit;
+            }
+        }
+    }
+
+    public function addBook()
+    {
+        session_start();
+        if ($_SESSION['role'] != 'LibraryStaff') {
+            header('Location: ' . BASE_URL . '/login');
+            exit;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_POST['isbn'])) {
+                $data = [
+                    'isbn' => $_POST['isbn'],
+                    'title' => $_POST['title'],
+                    'author' => $_POST['author'],
+                    'genre' => $_POST['genre'],
+                    'publication_year' => $_POST['publication_year'],
+                    'quantity_available' => $_POST['quantity_available'],
+                    'quantity_total' => $_POST['quantity_total']
+                ];
+                $this->model('BookModel')->addNewBook($data);
+
+                header('Location: ' . BASE_URL . '/staff/bookshelf');
+                exit;
+            }
+        }   
+    }
+
     public function patron()
     {
         session_start();
@@ -67,6 +137,86 @@ class Staff extends Controller
         $data['title'] = 'Patron';
         $this->view('templates/headerStaff', $data);
         $this->view('staff/patron', $data);
+    }
+
+    public function editPatron() {
+        session_start();
+        if ($_SESSION['role'] != 'LibraryStaff') {
+            header('Location: ' . BASE_URL . '/login');
+            exit;
+        }
+    
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_POST['patronId'])) {
+                $dataPatron = [
+                    'patronId' => $_POST['patronId'],
+                    'firstname' => $_POST['firstname'],
+                    'lastname' => $_POST['lastname'],
+                    'email' => $_POST['email'],
+                    'phonenumber' => $_POST['phonenumber'],
+                    'address' => $_POST['address']
+                ];
+                $dataUser = [
+                    'username' => $_POST['username'],
+                    'password' => $_POST['password']
+                ];
+                $this->model('PatronModel')->updatePatron($dataPatron);
+                $this->model('UserModel')->updateUser($dataUser);
+    
+                header('Location: ' . BASE_URL . '/staff/patron');
+                exit;
+            }
+        }
+    }
+
+    public function deletePatron()
+    {
+        session_start();
+        if ($_SESSION['role'] != 'LibraryStaff') {
+            header('Location: ' . BASE_URL . '/login');
+            exit;
+        }
+    
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_POST['patronId'])) {
+                $this->model('PatronModel')->deletePatron($_POST['patronId']);
+                header('Location: ' . BASE_URL . '/staff/patron');
+                exit;
+            }
+        }
+    }
+
+    public function addPatron()
+    {
+        session_start();
+        if ($_SESSION['role'] != 'LibraryStaff') {
+            header('Location: ' . BASE_URL . '/login');
+            exit;
+        }
+    
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_POST['firstname'])) {
+                $dataPatron = [
+                    'firstname' => $_POST['firstname'],
+                    'lastname' => $_POST['lastname'],
+                    'address' => $_POST['address'],
+                    'phone' => $_POST['phonenumber'],
+                    'email' => $_POST['email']
+                ]; 
+                $this->model('PatronModel')->addNewPatron($dataPatron);
+                $data['patron'] = $this->model('PatronModel')->getPatronByFirstName($_POST['firstname']);
+                $dataUser = [
+                    'username' => $_POST['username'],
+                    'password' => $_POST['password'],
+                    'role' => 'Patron',
+                    'patronId' => $data['patron'][0]['PatronId']
+                ];
+                $this->model('UserModel')->addNewUserPatron($dataUser);
+
+                header('Location: ' . BASE_URL . '/staff/patron');
+                exit;
+            }
+        }
     }
 
     public function loan()
@@ -130,6 +280,14 @@ class Staff extends Controller
         if ($_SESSION['role'] != 'LibraryStaff') {
             header('Location: ' . BASE_URL . '/login');
             exit;
+        }
+
+        if (isset($_POST['keyword'])) {
+            $keyword = $_POST['keyword'];
+            $type = isset($_POST['type']) ? $_POST['type'] : 'name';
+            $data['report'] = $this->model('LoanModel')->getReportSpecificUser($keyword);
+        } else {
+            $data['report'] = $this->model('LoanModel')->getReportUser();
         }
 
         $data['title'] = 'Report';

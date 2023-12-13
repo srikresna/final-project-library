@@ -37,8 +37,6 @@ class Patron extends Controller
             $data['books'] = $this->model('BookModel')->getAllDataBook();
         }
 
-
-
         $data['title'] = 'Bookshelf';
         $this->view('templates/headerPatron', $data);
         $this->view('patron/bookshelf', $data);
@@ -73,9 +71,9 @@ class Patron extends Controller
                 $data['targetedBook'][0]['PatronId'] = $data['userID'];
                 $data['targetedBook'][0]['ReservationDate'] = $date;
                 if ($this->model('ReservationModel')->addNewReservation($data['targetedBook'][0])) {
-                    header('Location: ' . BASE_URL . '/patron/reservation?success=true');
+                    header('Location: ' . BASE_URL . '/patron/reservation&success=true');
                 } else {
-                    header('Location: ' . BASE_URL . '/patron/reservation?error=date_taken');
+                    header('Location: ' . BASE_URL . '/patron/reservation&error=date_taken');
                 }
                 exit;
             } else {

@@ -25,6 +25,39 @@ class ReservationModel {
         return $this->connect->resultSet();
     }
 
+    public function getReservationByPatron($keyword) {
+        $query = "SELECT Reservation.*, Book.Title, Book.ISBN, Patron.FirstName FROM $this->table
+        JOIN Book ON Reservation.BookId = Book.BookId
+        JOIN Patron ON Reservation.PatronId = Patron.PatronId
+        WHERE Patron.FirstName LIKE :keyword";
+        $this->connect->query($query);
+        $this->connect->bind('keyword', "%$keyword%");
+        $this->connect->execute();
+        return $this->connect->resultSet();
+    }
+
+    public function getReservationByTitle($keyword) {
+        $query = "SELECT Reservation.*, Book.Title, Book.ISBN, Patron.FirstName FROM $this->table
+        JOIN Book ON Reservation.BookId = Book.BookId
+        JOIN Patron ON Reservation.PatronId = Patron.PatronId
+        WHERE Book.Title LIKE :keyword";
+        $this->connect->query($query);
+        $this->connect->bind('keyword', "%$keyword%");
+        $this->connect->execute();
+        return $this->connect->resultSet();
+    }
+
+    public function getReservationByISBN($keyword) {
+        $query = "SELECT Reservation.*, Book.Title, Book.ISBN, Patron.FirstName FROM $this->table
+        JOIN Book ON Reservation.BookId = Book.BookId
+        JOIN Patron ON Reservation.PatronId = Patron.PatronId
+        WHERE Book.ISBN LIKE :keyword";
+        $this->connect->query($query);
+        $this->connect->bind('keyword', "%$keyword%");
+        $this->connect->execute();
+        return $this->connect->resultSet();
+    }
+
     public function addNewReservation($data) {
         $bookID = $this->sanitizeInput($data['BookId']);
         $patronID = $this->sanitizeInput($data['PatronId']);

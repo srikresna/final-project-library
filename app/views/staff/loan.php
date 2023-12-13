@@ -20,7 +20,7 @@
             </form>
         </div>
     </div>
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>ISBN</th>
@@ -41,13 +41,16 @@
                     <td><?php echo $loan['LoanDate']; ?></td>
                     <td><?php echo $loan['DueDate']; ?></td>
                     <td><?php echo $loan['ReturnDate']; ?></td>
+                    <td>
+                        <button class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button>
+                        <button class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
                     </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
     <div class="row">
-        <div class="btn-primary text-center">
+        <div class="btn-primary text-center d-grid gap-2">
             <a href="<?= BASE_URL; ?>/staff/addBook" class="btn btn-primary">Add Loan</a>
         </div>
     </div>
