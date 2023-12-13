@@ -66,6 +66,8 @@ class Staff extends Controller
                 exit;
             }
         }
+
+        // DEV NOTE: the ISBN value in this version is cannot edited
     }
 
     public function deleteBook()
@@ -133,6 +135,7 @@ class Staff extends Controller
         } else {
             $data['patron'] = $this->model('PatronModel')->getAllDataPatron();
         }
+        $data['user'] = $this->model('UserModel')->getAllDataUser();
 
         $data['title'] = 'Patron';
         $this->view('templates/headerStaff', $data);
@@ -241,6 +244,8 @@ class Staff extends Controller
             $data['loans'] = $this->model('LoanModel')->getAllDataLoan();
         }
 
+        $data['isbn'] = $this->model('BookModel')->getAllDataBook();
+        $data['firstname'] = $this->model('PatronModel')->getAllDataPatron();
 
         $data['title'] = 'Loan';
         $this->view('templates/headerStaff', $data);
@@ -269,9 +274,94 @@ class Staff extends Controller
             $data['reserve'] = $this->model('ReservationModel')->getAllDataReservation();
         }
 
+        $data['isbn'] = $this->model('BookModel')->getAllDataBook();
+        $data['firstname'] = $this->model('PatronModel')->getAllDataPatron();
+
         $data['title'] = 'Reservation';
         $this->view('templates/headerStaff', $data);
         $this->view('staff/reservation', $data);
+    }
+
+    public function addReserve() {
+        session_start();
+        if ($_SESSION['role'] != 'LibraryStaff') {
+            header('Location: ' . BASE_URL . '/login');
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_POST['patron']) && isset($_POST['isbn']) && isset($_POST['date'])) {
+                $data = [
+                    'PatronId' => $_POST['patron'],
+                    'BookId' => $_POST['isbn'],
+                    'ReservationDate' => $_POST['date']
+                ];
+                $this->model('ReservationModel')->addNewReservation($data);
+
+                header('Location: ' . BASE_URL . '/staff/reservation');
+                exit;
+            }
+        }
+    }
+
+    public function deleteReserve() {
+        session_start();
+        if ($_SESSION['role'] != 'LibraryStaff') {
+            header('Location: ' . BASE_URL . '/login');
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_POST['patronId']) && isset($_POST['isbn']) && isset($_POST['reserveDate'])) {
+                $data = [
+                    'PatronId' => $_POST['patronId'],
+                    'isbn' => $_POST['isbn'],
+                    'ReservationDate' => $_POST['reserveDate']
+                ];
+                $res = $this->model('ReservationModel')->getAllDataReservation();
+                $targetedRes = [];
+                foreach ($res as $r) {
+                    if ($r['PatronId'] == $data['PatronId'] && $r['ISBN'] == $data['isbn'] && $r['ReservationDate'] == $data['ReservationDate']) {
+                        $targetedRes = $r;
+                        break;
+                    }
+                }
+
+                $this->model('ReservationModel')->deleteReservation($targetedRes['ReservationId']);
+
+                header('Location: ' . BASE_URL . '/staff/reservation');
+                exit;
+            }
+        }
+    }
+
+    public function editReserve() {
+        session_start();
+        if ($_SESSION['role'] != 'LibraryStaff') {
+            header('Location: ' . BASE_URL . '/login');
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_POST['firstname'])) {
+                $dataClient = [
+                    'patronId' => $_POST['patronId'],
+                    'date' => $_POST['date']
+                ];
+
+                $bookId = $this->model('BookModel')->getBookByISBN($_POST['isbn']);
+                $reserveId = $this->model('ReservationModel')->getReservationByISBN($_POST['isbn']);
+                $data = [
+                    'reserveId' => $reserveId[0]['ReservationId'],
+                    'bookId' => $bookId[0]['BookId'],
+                    'patronId' => $_POST['patronId'],
+                    'date' => $_POST['date']
+                ];
+
+                $this->model('ReservationModel')->updateReservation($data);
+
+                header('Location: ' . BASE_URL . '/staff/reservation');
+                exit;
+            }
+            
+        }
     }
 
     public function report()

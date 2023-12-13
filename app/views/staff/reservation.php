@@ -53,37 +53,40 @@
     </div>
 </div>
 
+<!-- Modal Edit -->
 <div class="modal fade" id="edit-modal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Edit Reservation</h5>
+                <h5 class="modal-title">Add Reservation</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <form id="edit-form" action="<?= BASE_URL; ?>/staff/editReserve" method="post">
-                    <input type="hidden" id="edit-form-id">
+                <form id="add-form" action="<?= BASE_URL; ?>/staff/editReserve" method="post">
+                    <input id="edit-form-id" type="hidden" name="patronId" value="">
+                    <div class="mb-3">
+                        <label for="edit-form-firstname" class="form-label">FirstName</label>
+                        <input type="text" class="form-control" id="edit-form-firstname" name="firstname" data-id="<?php echo $user['FirstName']; ?>" readonly>
+                    </div>
                     <div class="mb-3">
                         <label for="edit-form-isbn" class="form-label">ISBN</label>
-                        <input type="text" class="form-control" id="edit-form-isbn" name="isbn" data-id="<?php echo $user['ISBN']; ?>">
+                        <input type="text" class="form-control" id="edit-form-isbn" name="isbn" data-id="<?php echo $user['ISBN']; ?>" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="edit-form-title" class="form-label">Title</label>
-                        <input type="text" class="form-control" id="edit-form-title" name="title" data-id="<?php echo $user['Title']; ?>">
+                        <input type="text" class="form-control" id="edit-form-title" name="username" data-id="<?php echo $user['Title']; ?>" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="edit-form-date" class="form-label">Reservation Date</label>
                         <input type="date" class="form-control" id="edit-form-date" name="date" data-id="<?php echo $user['ReservationDate']; ?>">
                     </div>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="submit" class="btn btn-primary">Add Reserve</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
 
-
-<!-- Modal Add -->
 <div class="modal fade" id="add-modal">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -95,15 +98,19 @@
                 <form id="add-form" action="<?= BASE_URL; ?>/staff/addReserve" method="post">
                     <div class="mb-3">
                         <label for="add-form-patron" class="form-label">Patron</label>
-                        <input type="text" class="form-control" id="add-form-patron" name="firstname">
+                        <select class="form-select" id="add-form-patron" name="patron">
+                            <?php foreach ($data['firstname'] as $patron) : ?>
+                                <option value="<?php echo $patron['PatronId']; ?>"><?php echo $patron['FirstName']; ?></option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="add-form-isbn" class="form-label">ISBN</label>
-                        <input type="text" class="form-control" id="add-form-isbn" name="isbn">
-                    </div>
-                    <div class="mb-3">
-                        <label for="add-form-title" class="form-label">Title</label>
-                        <input type="text" class="form-control" id="add-form-title" name="title">
+                        <select class="form-select" id="add-form-isbn" name="isbn">
+                            <?php foreach ($data['isbn'] as $book) : ?>
+                                <option value="<?php echo $book['BookId']; ?>"><?php echo $book['ISBN'] . ' - ' . $book['Title'];; ?></option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="add-form-date" class="form-label">Reservation Date</label>
@@ -115,6 +122,7 @@
         </div>
     </div>
 </div>
+
 
 <!-- modal delete -->
 <div class="modal fade" id="delete-modal">
@@ -131,7 +139,9 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
                     <input id="delete-form-id" type="hidden" name="patronId" value="">
-                    <button type="submit" class="btn btn-danger" id="delete-confirm-button">Yes</button>
+                    <input id="delete-form-bookId" type="hidden" name="isbn" value="">
+                    <input id="delete-form-reserveDate" type="hidden" name="reserveDate" value="">
+                    <button class="btn btn-danger delete-button" data-id='<?php echo json_encode(array("PatronId" => $res['PatronId'], "ISBN" => $res['ISBN'], "ReservationDate" => $res['ReservationDate'])); ?>' data-bs-toggle="modal" data-bs-target="#delete-modal">Yes</button>
                 </div>
             </form>
         </div>
@@ -149,7 +159,10 @@
 
     document.querySelectorAll('.delete-button').forEach(item => {
         item.addEventListener('click', function(e) {
-            document.getElementById('delete-form-id').value = this.dataset.id;
+            let data = JSON.parse(this.dataset.id);
+            document.getElementById('delete-form-id').value = data.PatronId;
+            document.getElementById('delete-form-bookId').value = data.ISBN;
+            document.getElementById('delete-form-reserveDate').value = data.ReservationDate;
         });
     });
 
@@ -157,9 +170,16 @@
         item.addEventListener('click', function(e) {
             let data = JSON.parse(this.dataset.id);
             document.getElementById('edit-form-id').value = data.PatronId;
+            document.getElementById('edit-form-firstname').value = data.FirstName;
             document.getElementById('edit-form-isbn').value = data.ISBN;
             document.getElementById('edit-form-title').value = data.Title;
             document.getElementById('edit-form-date').value = data.ReservationDate;
         });
     });
+
+    const reservationDateEdit = document.querySelector('#edit-form-date');
+    const reservationDateAdd = document.querySelector('#add-form-date');    
+    const today = new Date().toISOString().split('T')[0];
+    reservationDateEdit.setAttribute('min', today);
+    reservationDateAdd.setAttribute('min', today);
 </script>

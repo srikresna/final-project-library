@@ -20,6 +20,8 @@ class PatronModel
 
     public function getAllDataPatron()
     {   
+
+        // $query = "SELECT * FROM $this->table";
         $query = "SELECT Patron.*, [User].Username, [User].Password FROM $this->table
         JOIN [User] ON Patron.PatronId = [User].PatronId";
         $this->connect->query($query);
@@ -34,12 +36,12 @@ class PatronModel
         $phone = $this->sanitizeInput($data['phone']);
         $address = $this->sanitizeInput($data['address']);
         $mail = $this->sanitizeInput($data['email']);
-        $query = "INSERT INTO $this->table VALUES (:fname, :lname, :phone, :addresses, :mail)";
+        $query = "INSERT INTO Patron (FirstName, LastName, PhoneNumber, Address, Email) VALUES (:fname, :lname, :phone, :address, :mail)";
         $this->connect->query($query);
         $this->connect->bind('fname', $fname);
         $this->connect->bind('lname', $lname);
         $this->connect->bind('phone', $phone);
-        $this->connect->bind('addresses', $address);
+        $this->connect->bind('address', $address);
         $this->connect->bind('mail', $mail);
         $this->connect->execute();
         

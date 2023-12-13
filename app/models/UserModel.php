@@ -61,4 +61,11 @@ class UserModel extends Database{
         $this->connect->execute();
         return $this->connect->lastInsertId();
     }
+
+    public function getAllDataUser() {
+        $query = "SELECT * FROM $this->table";
+        $this->connect->query($query);
+        $this->connect->execute();
+        return $this->connect->resultSet();
+    }
 }
