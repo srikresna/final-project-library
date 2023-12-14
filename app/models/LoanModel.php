@@ -216,4 +216,20 @@ class LoanModel
         $this->connect->execute();
         return $this->connect->resultSet();
     }
+
+    public function getReportBook()
+    {
+        $query = "SELECT
+        Book.Title,
+        Book.ISBN,
+        SUM(CASE WHEN Loan.BookId IS NOT NULL THEN 1 ELSE 0 END) AS TotalLoaned,
+        SUM(CASE WHEN Loan.ReturnDate IS NOT NULL THEN 1 ELSE 0 END) AS TotalNotReturned,
+        SUM(CASE WHEN Loan.ReturnDate IS NOT NULL AND Loan.DueDate < CAST(GETDATE() AS DATE) THEN 1 ELSE 0 END) AS TotalOverdue
+        FROM Book
+        INNER JOIN Loan ON Book.BookId = Loan.BookId
+        GROUP BY Book.Title, Book.ISBN;";
+        $this->connect->query($query);
+        $this->connect->execute();
+        return $this->connect->resultSet();
+    }
 }

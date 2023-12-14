@@ -502,15 +502,31 @@ class Staff extends Controller
 
         if (isset($_POST['keyword'])) {
             $keyword = $_POST['keyword'];
-            $type = isset($_POST['type']) ? $_POST['type'] : 'name';
             $data['report'] = $this->model('LoanModel')->getReportSpecificUser($keyword);
         } else {
-            $data['report'] = $this->model('LoanModel')->getReportUser();
+            $data['reportUser'] = $this->model('LoanModel')->getReportUser();
+
         }
 
+        $data['reportBook'] = $this->model('LoanModel')->getReportBook();
         $data['title'] = 'Report';
         $this->view('templates/headerStaff', $data);
         $this->view('staff/report', $data);
+    }
+
+    public function printReport()
+    {
+        session_start();
+        if ($_SESSION['role'] != 'LibraryStaff') {
+            header('Location: ' . BASE_URL . '/login');
+            exit;
+        }
+        $data['reportUser'] = $this->model('LoanModel')->getReportUser();
+        $data['reportBook'] = $this->model('LoanModel')->getReportBook();
+
+        $data['title'] = 'Report';
+        $this->view('staff/printReport', $data);
+
     }
 
     public function logout()

@@ -1,20 +1,21 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="<?= BASE_URL; ?>/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+    <title><?= $data['title']; ?></title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+
 <div class="container">
-    <h1>Report</h1>
-
-    <div class="row">
-        <div class="col-md-6">
-        </div>
-        <div class="col-md-6">
-            <form action="<?= BASE_URL; ?>/staff/report" method="post">
-                <div class="input-group mb-3">
-                    <input id="search-input" type="text" name="keyword" class="form-control" placeholder="Search by Name" aria-label="Text input with dropdown button">
-                    <input id="search-type" type="hidden" name="type" value="name">
-                    <div class="btn btn-primary" type="submit">Search</div>
-                </div>
-            </form>
-        </div>
-    </div>
-
+    <hr>
+    <h3 class="text-center">Library Report</h3>
+    <hr style="border:3px solid;">
+    <br><br>
     <h5>Table Information for Patron</h5>
     <hr>
     <table class="table table-striped">
@@ -68,18 +69,12 @@
     </table>
     <br>
     <div class="row">
-        <div class="btn-primary text-center d-grid gap-2">
-            <a href="<?= BASE_URL; ?>/staff/printReport" class="btn btn-primary">Print Report</a>
-        </div>
+        <p class="text-end">Signature, <?php echo date('d-m-Y'); ?></p>
+        <br><br><br>
+        <p class="text-end">Librarian Staff</p>
     </div>
-
-    <script>
-        document.querySelectorAll('.dropdown-item').forEach(item => {
-            item.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.getElementById('search-input').placeholder = 'Search by ' + this.innerText;
-                document.getElementById('search-type').value = this.dataset.type;
-            });
-        });
-    </script>
 </div>
+
+<script>
+    window.print();
+</script>
