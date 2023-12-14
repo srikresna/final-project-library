@@ -61,6 +61,7 @@ class Patron extends Controller
         $data['reserve'] = $this->model('ReservationModel')->getOlderReservation($data['userID']);
         $data['active_reserve'] = $this->model('ReservationModel')->getActiveReservation();
         $data['loaned'] = $this->model('LoanModel')->getNotReturned();
+        $data['books'] = $this->model('BookModel')->getAllDataBook();
         $data['title'] = 'Reservation';
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {

@@ -92,7 +92,13 @@
                 <form action="<?= BASE_URL; ?>/patron/reservation" method="post">
                     <div class="mb-3">
                         <label for="isbn" class="form-label">ISBN</label>
-                        <input type="text" class="form-control" id="isbn" name="isbn" required>
+                        <select class="form-select" id="add-form-isbn" name="isbn">
+                            <?php foreach ($data['books'] as $book) : ?>
+                                <option value="<?php echo $book['ISBN']; ?>">
+                                    <?php echo $book['ISBN'] . ' - ' . $book['Title']; ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="reservationDate" class="form-label">Reservation Date</label>
