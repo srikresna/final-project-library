@@ -39,7 +39,7 @@
                     <td><?php echo $fine['PaymentStatus']; ?></td>
                     <td><?php echo $fine['DueDate']; ?></td>
                     <form id="paid-form" action="<?= BASE_URL; ?>/staff/markPaid" method="post">
-                        <input type="hidden" name="PatronId" value="<?php echo $fine['PatronId']; ?>">
+                        <input type="hidden" id="paid-form-patronId" name="patronId" value="<?php echo $fine['PatronId']; ?>">
                         <td>
                             <button class="btn btn-primary paid-button" data-id="<?php echo $fine['PatronId'] ?>"><i class="bi bi-check"></i> Mark as Paid</button>
                         </td>
@@ -57,9 +57,13 @@
 
 <script>
     document.querySelectorAll('.paid-button').forEach(item => {
-        item.addEventListener('click', event => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
 
+            const patronId = this.dataset.id;
 
+            document.querySelector('#paid-form-patronId').value = patronId;
+            document.querySelector('#paid-form').submit();
         })
     })
 </script>

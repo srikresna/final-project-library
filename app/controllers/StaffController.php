@@ -461,6 +461,25 @@ class Staff extends Controller
         $this->view('staff/fine', $data);
     }
 
+    public function markPaid() {
+        session_start();
+        if ($_SESSION['role'] != 'LibraryStaff') {
+            header('Location: ' . BASE_URL . '/login');
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_POST['patronId'])) {
+                $data = [
+                    'PatronId' => $_POST['patronId']
+                ];
+                $this->model('FineModel')->paidFine($data);
+
+                header('Location: ' . BASE_URL . '/staff/fine');
+                exit;
+            }
+        }
+    }
+
     public function checkOverdueFine() {
         session_start();
         if ($_SESSION['role'] != 'LibraryStaff') {
