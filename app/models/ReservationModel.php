@@ -94,6 +94,24 @@ class ReservationModel {
         return $this->connect->resultSet();
     }
 
+
+    public function updateReservation($data) {
+        $query = "UPDATE Reservation SET BookId = :bookId, PatronId = :patronId, ReservationDate = :date WHERE ReservationId = :reservationId";
+        $this->connect->query($query);
+        $this->connect->bind(':bookId', $data['bookId']);
+        $this->connect->bind(':patronId', $data['patronId']);
+        $this->connect->bind(':date', $data['date']);
+        $this->connect->bind(':reservationId', $data['reserveId']);
+        $this->connect->execute();
+    }
+
+    public function deleteReservation($reservationId) {
+        $query = "DELETE FROM Reservation WHERE ReservationId = :reservationId";
+        $this->connect->query($query);
+        $this->connect->bind(':reservationId', $reservationId);
+        $this->connect->execute();
+    }
+
     //method untuk mendapatkan reservation yang lebih dari tanggal saat ini, dapatkan nama patron juga
     public function getActiveReservation() {
         $query = "SELECT Reservation.*, Book.Title, Patron.FirstName FROM $this->table

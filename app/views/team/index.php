@@ -75,21 +75,21 @@
   <section id="team-introduction">
     <h2>Meet Our Team</h2>
     <div class="team-member">
-      <img src="https://via.placeholder.com/150" alt="Azahra Salsabila">
+      <img src="<?=BASE_URL; ?>/img/female1.png" alt="Azahra Salsabila">
       <div class="member-info">
         <p style="font-weight: bold;">Azahra Salsabila</p>
         <p>Number 05</p>
       </div>
     </div>
     <div class="team-member">
-      <img src="https://via.placeholder.com/150" alt="Lenka Melinda Florienka">
+      <img src="<?=BASE_URL; ?>/img/female2.png" alt="Lenka Melinda Florienka">
       <div class="member-info">
         <p style="font-weight: bold;">Lenka Melinda</p>
         <p>Number 12</p>
       </div>
     </div>
     <div class="team-member">
-      <img src="https://via.placeholder.com/150" alt="Sri Kresna Maha Dewa">
+      <img src="<?=BASE_URL; ?>/img/male1.png" alt="Sri Kresna Maha Dewa">
       <div class="member-info">
         <p style="font-weight: bold;">Sri Kresna</p>
         <p>Number 25</p>
