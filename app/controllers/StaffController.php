@@ -245,11 +245,100 @@ class Staff extends Controller
         }
 
         $data['isbn'] = $this->model('BookModel')->getAllDataBook();
+        $data['available'] = $this->model('BookModel')->getBookAvailable();
         $data['firstname'] = $this->model('PatronModel')->getAllDataPatron();
 
         $data['title'] = 'Loan';
         $this->view('templates/headerStaff', $data);
         $this->view('staff/loan', $data);
+    }
+
+    public function addLoan() {
+        session_start();
+        if ($_SESSION['role'] != 'LibraryStaff') {
+            header('Location: ' . BASE_URL . '/login');
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            if (isset($_POST['patron']) && isset($_POST['isbn'])) {
+
+                $data = [
+                    'BookId' => $_POST['isbn'],
+                    'PatronId' => $_POST['patron']
+                ];
+
+                $this->model('LoanModel')->addNewLoan($data);
+
+                header('Location: ' . BASE_URL . '/staff/loan');
+                exit;
+            }
+        }
+    }
+
+    public function markReturn() {
+        session_start();
+        if ($_SESSION['role'] != 'LibraryStaff') {
+            header('Location: ' . BASE_URL . '/login');
+        } 
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_POST['patronId']) && isset($_POST['bookId'])) {
+                $data = [
+                    'BookId' => $_POST['bookId'],
+                    'PatronId' => $_POST['patronId'],
+                    'ReturnDate' => $_POST['returnDate']
+                ];
+                
+                $this->model('LoanModel')->returnBook($data);
+
+                header('Location: ' . BASE_URL . '/staff/loan');
+                exit;
+            }
+        }
+    }
+
+    public function assessFine() {
+        session_start();
+        if ($_SESSION['role'] != 'LibraryStaff') {
+            header('Location: ' . BASE_URL . '/login');
+        } 
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_POST['patronId']) && isset($_POST['amount']) && isset($_POST['due'])) {
+                $data = [
+                    'PatronId' => $_POST['patronId'],
+                    'Amount' => $_POST['amount'],
+                    'PaymentStatus' => 'Unpaid',
+                    'DueDate' => $_POST['due']
+                ];
+                $this->model('FineModel')->addNewFine($data);
+
+                header('Location: ' . BASE_URL . '/staff/loan');
+                exit;
+            }
+        }
+    }
+
+    public function deleteLoan() {
+        session_start();
+        if ($_SESSION['role'] != 'LibraryStaff') {
+            header('Location: ' . BASE_URL . '/login');
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_POST['patronId']) && isset($_POST['bookId'])) {
+                $data = [
+                    'BookId' => $_POST['bookId'],
+                    'PatronId' => $_POST['patronId']
+                ];
+
+                $this->model('LoanModel')->deleteLoan($data);
+
+                header('Location: ' . BASE_URL . '/staff/loan');
+                exit;
+            }
+        }
     }
 
     public function reservation()
@@ -357,6 +446,31 @@ class Staff extends Controller
             }
             
         }
+    }
+
+    public function fine() {
+        session_start();
+        if ($_SESSION['role'] != 'LibraryStaff') {
+            header('Location: ' . BASE_URL . '/login');
+        }
+
+        $data['fine'] = $this->model('FineModel')->getAllDataFine();
+
+        $data['title'] = 'Fine';
+        $this->view('templates/headerStaff', $data);
+        $this->view('staff/fine', $data);
+    }
+
+    public function checkOverdueFine() {
+        session_start();
+        if ($_SESSION['role'] != 'LibraryStaff') {
+            header('Location: ' . BASE_URL . '/login');
+        }
+
+        $this->model('FineModel')->checkOverdueFine();
+
+        header('Location: ' . BASE_URL . '/staff/fine');
+        exit;
     }
 
     public function report()

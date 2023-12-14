@@ -1,5 +1,7 @@
 <?php
 
+require_once 'BookModel.php';
+
 class LoanModel
 {
     private $table = '[Loan]';
@@ -75,7 +77,6 @@ class LoanModel
         $this->connect->bind('patronId', $patronId);
         $this->connect->bind('return', $return);
         $this->connect->execute();
-        return $this->connect->resultSet();
 
         $bookModel = new BookModel();
         $currentQuantity = $bookModel->getQuantity($bookId);
@@ -124,7 +125,6 @@ class LoanModel
 
     public function getNotReturned()
     {
-        // dapatkan judul buku, nama peminjam, dan tanggal peminjaman
         $query = "SELECT Loan.*, Book.Title, Patron.FirstName FROM $this->table
         JOIN Book ON Loan.BookId = Book.BookId
         JOIN Patron ON Loan.PatronId = Patron.PatronId
@@ -168,6 +168,17 @@ class LoanModel
         $this->connect->bind(':keyword', "%$data%");
         $this->connect->execute();
         return $this->connect->resultSet();
+    }
+
+    public function deleteLoan($data)
+    {
+        $bookId = $this->sanitizeInput($data['BookId']);
+        $patronId = $this->sanitizeInput($data['PatronId']);
+        $query = "DELETE FROM $this->table WHERE BookId = :bookId AND PatronId = :patronId";
+        $this->connect->query($query);
+        $this->connect->bind('bookId', $bookId);
+        $this->connect->bind('patronId', $patronId);
+        $this->connect->execute();
     }
 
     public function getReportUser()

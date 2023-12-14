@@ -35,6 +35,9 @@
                         <a class="nav-link" href="<?= BASE_URL; ?>/staff/reservation">Reservation</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="<?= BASE_URL; ?>/staff/fine">Fine</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="<?= BASE_URL; ?>/staff/report">Report</a>
                     </li>
                     <li class="nav-item">

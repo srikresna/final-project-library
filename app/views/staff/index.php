@@ -33,6 +33,13 @@
         </div>
         <div class="col-md-2">
             <div class="box">
+                <h4>Fine</h4>
+                <p>View list of fine</p>
+                <a href="<?= BASE_URL; ?>/staff/fine" class="btn btn-primary">Go to Fine</a>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="box">
                 <h4>Report</h4>
                 <p>Show system report</p>
                 <a href="<?= BASE_URL; ?>/staff/report" class="btn btn-primary">Go to Report</a>

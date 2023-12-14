@@ -116,6 +116,28 @@ class Patron extends Controller
         $this->view('patron/loan', $data);
     }
 
+    public function markReturn()
+    {
+        session_start();
+        if ($_SESSION['role'] != 'Patron') {
+            header('Location: ' . BASE_URL . '/login');
+            exit;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_POST['bookId']) && isset($_POST['patronId'])) {
+                $data = [
+                    'bookId' => $_POST['bookId'],
+                    'patronId' => $_POST['patronId']
+                ];
+
+                $this->model('LoanModel')->returnBook($data);
+                header('Location: ' . BASE_URL . '/patron/loan');
+                exit;
+            }
+        }
+    }
+
     public function information()
     {
         session_start();

@@ -167,6 +167,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
                     <input id="delete-form-id" type="hidden" name="patronId" value="">
+                    <input id="delete-form-bookId" type="hidden" name="isbn" value="">
                     <button type="submit" class="btn btn-danger" id="delete-confirm-button">Yes</button>
                 </div>
             </form>

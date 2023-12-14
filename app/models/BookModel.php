@@ -127,6 +127,15 @@ class BookModel
         return $this->connect->rowCount();
     }
 
+    //get book with quantity available > 0
+    public function getBookAvailable()
+    {
+        $query = "SELECT * FROM $this->table WHERE QuantityAvailable > 0";
+        $this->connect->query($query);
+        $this->connect->execute();
+        return $this->connect->resultSet();
+    }
+
     // DB function to check if a book is available
     public function checkBookAvailability($bookID)
     {
