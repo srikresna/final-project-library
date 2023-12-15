@@ -16,10 +16,10 @@ VALUES ('9780000000000', 'The Hobbit', 'J. R. R. Tolkien', 'Fantasy', '1937-09-2
 
 
 INSERT INTO [dbo].[Patron] ([FirstName], [LastName], [Email], [PhoneNumber], [Address])
-VALUES ('Gareng', 'Pandawa', 'garengganteng@mail.com', '081234567890', 'Jl. Semar No. 1'),
-         ('Petruk', 'Pandawa', 'petruklanang@mail.com', '081234567891', 'Jl. Semar No. 2'),
-         ('Bagong', 'Pandawa', 'bagonglemu@mail.com', '081234567892', 'Jl. Semar No. 3'),
-         ('Semar', 'Pandawa', 'semarkentut@mail.com', '081234567893', 'Jl. Semar No. 4');
+VALUES ('kresna', 'kresna', 'kresnakresna@mail.com', '081234567890', 'Jl. Kresna No. 1'),
+         ('bisma', 'bisma', 'bismabisma@mail.com', '081234567891', 'Jl. Bisma No. 2'),
+         ('arjuna', 'arjuna', 'arjunaarjuna@mail.com', '081234567892', 'Jl. Arjuna No. 3'),
+         ('dewa', 'dewa', 'dewadewa@mail.com', '081234567893', 'Jl. Dewa No. 4');
 
 INSERT INTO [dbo].[Loan] ([BookId], [PatronId], [LoanDate], [DueDate], [ReturnDate])
 VALUES (1, 1, '2023-01-01', '2023-01-08', '2023-01-02'),
@@ -30,8 +30,7 @@ VALUES (1, 1, '2023-01-01', '2023-01-08', '2023-01-02'),
 INSERT INTO [dbo].[Fine] ([PatronId], [Amount], [PaymentStatus], [DueDate])
 VALUES (1, 10000, 'Paid', '2023-01-08'),
          (2, 20000, 'Paid', '2023-02-08'),
-         (3, 30000, 'Paid', '2023-03-08'),
-         (4, 40000, 'Paid', '2023-04-08');
+         (3, 30000, 'Paid', '2023-03-08');
 
 INSERT INTO [dbo].[Reservation] ([BookId], [PatronId], [ReservationDate])
 VALUES (5, 1, '2023-11-01'),
@@ -40,21 +39,14 @@ VALUES (5, 1, '2023-11-01'),
          (8, 4, '2023-11-04');
 
 INSERT INTO [dbo].[LibraryStaff] ([FirstName], [LastName], [Email], [PhoneNumber])
-VALUES ('Bambang', 'Sutopo', 'sutopobambang@mail.com', '081234567894'),
-        ('Nurhadi', 'Sudjatmiko', 'jadmikoadi@mail.com', '081234567895');
+VALUES ('admin', 'admin', 'adminadmin@mail.com', '081234567894'),
+        ('sri', 'sri', 'srisri@mail.com', '081234567895');
 
--- INSERT INTO [dbo].[User] ([Username], [Password], [Role])
--- VALUES ('bambang', 'admin', 'LibraryStaff'),
---          ('nurhadi', 'admin', 'LibraryStaff'),
---          ('gareng', 'gareng', 'Patron'),
---          ('petruk', 'petruk', 'Patron'),
---          ('bagong', 'bagong', 'Patron'),
---          ('semar', 'semar', 'Patron');
 
 INSERT INTO [dbo].[User] ([Username], [Password], [Role], [LibraryStaffId], [PatronId])
-VALUES ('bambang', 'admin', 'LibraryStaff', 1, NULL),
-         ('nurhadi', 'admin', 'LibraryStaff', 2, NULL),
-         ('gareng', 'gareng', 'Patron', NULL, 1),
-         ('petruk', 'petruk', 'Patron', NULL, 2),
-         ('bagong', 'bagong', 'Patron', NULL, 3),
-         ('semar', 'semar', 'Patron', NULL, 4);
+VALUES ('admin', 'admin', 'LibraryStaff', 1, NULL),
+         ('sri', 'sri', 'LibraryStaff', 2, NULL),
+         ('kresna', 'kresna', 'Patron', NULL, 1),
+         ('bisma', 'bisma', 'Patron', NULL, 2),
+         ('arjuna', 'arjuna', 'Patron', NULL, 3),
+         ('dewa', 'dewa', 'Patron', NULL, 4);
