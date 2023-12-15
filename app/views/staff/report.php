@@ -57,8 +57,8 @@
         <tbody>
             <?php foreach ($data['reportBook'] as $book) : ?>
                 <tr>
-                    <td><?php echo $book['ISBN']; ?></td>
                     <td><?php echo $book['Title']; ?></td>
+                    <td><?php echo $book['ISBN']; ?></td>
                     <td><?php echo $book['TotalLoaned']; ?></td>
                     <td><?php echo $book['TotalNotReturned']; ?></td>
                     <td><?php echo $book['TotalOverdue']; ?></td>
