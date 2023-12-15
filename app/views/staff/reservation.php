@@ -50,6 +50,9 @@
         <div class="btn-primary text-center d-grid gap-2">
             <a class="btn btn-primary btn-add" data-bs-toggle="modal" data-bs-target="#add-modal">Add Reservation</a>
         </div>
+        <div class="btn-primary text-center d-grid gap-2 mt-2">
+            <a href="<?= BASE_URL; ?>/staff/sendReserveNotif" class="btn btn-primary">Send Notification</a>
+        </div>
     </div>
 </div>
 

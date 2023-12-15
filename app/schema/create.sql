@@ -80,6 +80,20 @@ CREATE TABLE
     CONSTRAINT [PK_User] PRIMARY KEY ([UserId])
 );
 
+CREATE TABLE
+    [dbo].[Mail]
+(
+    [MailId] INT NOT NULL IDENTITY (1, 1),
+    [PatronID] INT NULL,
+    [Subject] VARCHAR(100) NOT NULL,
+    [Body] VARCHAR(255) NOT NULL,
+    [MailDate] DATE NOT NULL,
+    CONSTRAINT [PK_Mail] PRIMARY KEY ([MailId])
+)
+
+ALTER TABLE
+    [dbo].[Mail] ADD CONSTRAINT [FK_Mail_Patron]
+    FOREIGN KEY ([PatronId]) REFERENCES [dbo].[Patron] ([PatronId]) ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE
     [dbo].[Loan] ADD CONSTRAINT [FK_Loan_Book]
@@ -108,7 +122,3 @@ ALTER TABLE
 ALTER TABLE
     [dbo].[User] ADD CONSTRAINT [FK_User_Patron]
     FOREIGN KEY ([PatronId]) REFERENCES [dbo].[Patron] ([PatronId]) ON DELETE CASCADE ON UPDATE CASCADE;
-
-
-
-

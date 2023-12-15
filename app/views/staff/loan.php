@@ -87,6 +87,9 @@
         <div class="btn-primary text-center d-grid gap-2">
             <a href="<?= BASE_URL; ?>/staff/addLoan" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-modal">Add Loan</a>
         </div>
+        <div class="btn-primary text-center d-grid gap-2 mt-2">
+            <a href="<?= BASE_URL; ?>/staff/sendLoanNotif" class="btn btn-primary">Send Notification</a>
+        </div>
     </div>
 </div>
 <!-- Modal Add -->

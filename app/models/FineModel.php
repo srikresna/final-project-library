@@ -67,6 +67,12 @@ class FineModel {
         $this->connect->execute();
     }
 
+    public function getUnpaidFine() {
+        $query = "SELECT DISTINCT PatronID FROM $this->table WHERE PaymentStatus = 'Unpaid'";
+        $this->connect->query($query);
+        $this->connect->execute();
+    }
+
     // DB function to calculate total fine of a patron
     public function getTotalFine($patronID) {
         $query = "SELECT SUM(Amount) AS TotalFine FROM $this->table WHERE PatronID = :patronID";

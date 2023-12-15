@@ -50,7 +50,10 @@
     </table>
     <div class="row">
         <div class="btn-primary text-center d-grid gap-2">
-            <a href="<?= BASE_URL; ?>/staff/checkOverdueFine" class="btn btn-primary btn-add">Check Overdue Fine</a>
+            <a href="<?= BASE_URL; ?>/staff/checkOverdueFine" class="btn btn-primary btn-add">Check & Assess Overdue Fine</a>
+        </div>
+        <div class="btn-primary text-center d-grid gap-2 mt-2">
+            <a href="<?= BASE_URL; ?>/staff/sendFineNotif" class="btn btn-primary">Send Notification</a>
         </div>
     </div>
 </div>

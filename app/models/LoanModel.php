@@ -111,6 +111,15 @@ class LoanModel
         return $this->connect->resultSet();
     }
 
+    public function getOverduePatron()
+    {
+        // gain id patron who have loan overdue book
+        $query = "SELECT DISTINCT PatronId FROM $this->table WHERE DueDate < GETDATE() AND ReturnDate IS NULL";
+        $this->connect->query($query);
+        $this->connect->execute();
+        return $this->connect->resultSet();
+    }
+
     public function getOlderLoan($patronId)
     {
         $query = "SELECT Loan.*, Book.Title, Book.ISBN FROM $this->table 

@@ -112,12 +112,18 @@ class ReservationModel {
         $this->connect->execute();
     }
 
-    //method untuk mendapatkan reservation yang lebih dari tanggal saat ini, dapatkan nama patron juga
     public function getActiveReservation() {
         $query = "SELECT Reservation.*, Book.Title, Patron.FirstName FROM $this->table
         JOIN Book ON Reservation.BookId = Book.BookId
         JOIN Patron ON Reservation.PatronId = Patron.PatronId
         WHERE Reservation.ReservationDate > GETDATE()";
+        $this->connect->query($query);
+        $this->connect->execute();
+        return $this->connect->resultSet();
+    }
+
+    public function getReadyReservation() {
+        $query = "SELECT DISTINCT PatronId FROM $this->table WHERE ReservationDate <= GETDATE()";
         $this->connect->query($query);
         $this->connect->execute();
         return $this->connect->resultSet();

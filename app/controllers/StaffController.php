@@ -42,7 +42,8 @@ class Staff extends Controller
         $this->view('staff/bookshelf', $data);
     }
 
-    public function editBook() {
+    public function editBook()
+    {
         session_start();
         if ($_SESSION['role'] != 'LibraryStaff') {
             header('Location: ' . BASE_URL . '/login');
@@ -77,7 +78,7 @@ class Staff extends Controller
             header('Location: ' . BASE_URL . '/login');
             exit;
         }
-    
+
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_POST['isbn'])) {
                 $this->model('BookModel')->deleteBook($_POST['isbn']);
@@ -107,11 +108,17 @@ class Staff extends Controller
                     'quantity_total' => $_POST['quantity_total']
                 ];
                 $this->model('BookModel')->addNewBook($data);
+                // message subject new book and body is detail of new book
+                $message = [
+                    'Subject' => 'New Book has Arrived',
+                    'Body' => 'New book' . $data['title'] . ' has arrived. Come to the library to borrow it.',
+                ];
+                $this->model('MailModel')->batchMail($message);
 
                 header('Location: ' . BASE_URL . '/staff/bookshelf');
                 exit;
             }
-        }   
+        }
     }
 
     public function patron()
@@ -142,13 +149,14 @@ class Staff extends Controller
         $this->view('staff/patron', $data);
     }
 
-    public function editPatron() {
+    public function editPatron()
+    {
         session_start();
         if ($_SESSION['role'] != 'LibraryStaff') {
             header('Location: ' . BASE_URL . '/login');
             exit;
         }
-    
+
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_POST['patronId'])) {
                 $dataPatron = [
@@ -165,7 +173,7 @@ class Staff extends Controller
                 ];
                 $this->model('PatronModel')->updatePatron($dataPatron);
                 $this->model('UserModel')->updateUser($dataUser);
-    
+
                 header('Location: ' . BASE_URL . '/staff/patron');
                 exit;
             }
@@ -179,7 +187,7 @@ class Staff extends Controller
             header('Location: ' . BASE_URL . '/login');
             exit;
         }
-    
+
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_POST['patronId'])) {
                 $this->model('PatronModel')->deletePatron($_POST['patronId']);
@@ -196,7 +204,7 @@ class Staff extends Controller
             header('Location: ' . BASE_URL . '/login');
             exit;
         }
-    
+
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_POST['firstname'])) {
                 $dataPatron = [
@@ -205,7 +213,7 @@ class Staff extends Controller
                     'address' => $_POST['address'],
                     'phone' => $_POST['phonenumber'],
                     'email' => $_POST['email']
-                ]; 
+                ];
                 $this->model('PatronModel')->addNewPatron($dataPatron);
                 $data['patron'] = $this->model('PatronModel')->getPatronByFirstName($_POST['firstname']);
                 $dataUser = [
@@ -253,7 +261,8 @@ class Staff extends Controller
         $this->view('staff/loan', $data);
     }
 
-    public function addLoan() {
+    public function addLoan()
+    {
         session_start();
         if ($_SESSION['role'] != 'LibraryStaff') {
             header('Location: ' . BASE_URL . '/login');
@@ -276,11 +285,12 @@ class Staff extends Controller
         }
     }
 
-    public function markReturn() {
+    public function markReturn()
+    {
         session_start();
         if ($_SESSION['role'] != 'LibraryStaff') {
             header('Location: ' . BASE_URL . '/login');
-        } 
+        }
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_POST['patronId']) && isset($_POST['bookId'])) {
@@ -289,7 +299,7 @@ class Staff extends Controller
                     'PatronId' => $_POST['patronId'],
                     'ReturnDate' => $_POST['returnDate']
                 ];
-                
+
                 $this->model('LoanModel')->returnBook($data);
 
                 header('Location: ' . BASE_URL . '/staff/loan');
@@ -298,11 +308,12 @@ class Staff extends Controller
         }
     }
 
-    public function assessFine() {
+    public function assessFine()
+    {
         session_start();
         if ($_SESSION['role'] != 'LibraryStaff') {
             header('Location: ' . BASE_URL . '/login');
-        } 
+        }
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_POST['patronId']) && isset($_POST['amount']) && isset($_POST['due'])) {
@@ -320,7 +331,8 @@ class Staff extends Controller
         }
     }
 
-    public function deleteLoan() {
+    public function deleteLoan()
+    {
         session_start();
         if ($_SESSION['role'] != 'LibraryStaff') {
             header('Location: ' . BASE_URL . '/login');
@@ -371,7 +383,8 @@ class Staff extends Controller
         $this->view('staff/reservation', $data);
     }
 
-    public function addReserve() {
+    public function addReserve()
+    {
         session_start();
         if ($_SESSION['role'] != 'LibraryStaff') {
             header('Location: ' . BASE_URL . '/login');
@@ -392,7 +405,8 @@ class Staff extends Controller
         }
     }
 
-    public function deleteReserve() {
+    public function deleteReserve()
+    {
         session_start();
         if ($_SESSION['role'] != 'LibraryStaff') {
             header('Location: ' . BASE_URL . '/login');
@@ -422,7 +436,8 @@ class Staff extends Controller
         }
     }
 
-    public function editReserve() {
+    public function editReserve()
+    {
         session_start();
         if ($_SESSION['role'] != 'LibraryStaff') {
             header('Location: ' . BASE_URL . '/login');
@@ -444,11 +459,11 @@ class Staff extends Controller
                 header('Location: ' . BASE_URL . '/staff/reservation');
                 exit;
             }
-            
         }
     }
 
-    public function fine() {
+    public function fine()
+    {
         session_start();
         if ($_SESSION['role'] != 'LibraryStaff') {
             header('Location: ' . BASE_URL . '/login');
@@ -461,7 +476,8 @@ class Staff extends Controller
         $this->view('staff/fine', $data);
     }
 
-    public function markPaid() {
+    public function markPaid()
+    {
         session_start();
         if ($_SESSION['role'] != 'LibraryStaff') {
             header('Location: ' . BASE_URL . '/login');
@@ -480,7 +496,8 @@ class Staff extends Controller
         }
     }
 
-    public function checkOverdueFine() {
+    public function checkOverdueFine()
+    {
         session_start();
         if ($_SESSION['role'] != 'LibraryStaff') {
             header('Location: ' . BASE_URL . '/login');
@@ -505,7 +522,6 @@ class Staff extends Controller
             $data['report'] = $this->model('LoanModel')->getReportSpecificUser($keyword);
         } else {
             $data['reportUser'] = $this->model('LoanModel')->getReportUser();
-
         }
 
         $data['reportBook'] = $this->model('LoanModel')->getReportBook();
@@ -526,7 +542,68 @@ class Staff extends Controller
 
         $data['title'] = 'Report';
         $this->view('staff/printReport', $data);
+    }
 
+    public function sendLoanNotif()
+    {
+        session_start();
+        if ($_SESSION['role'] != 'LibraryStaff') {
+            header('Location: ' . BASE_URL . '/login');
+        }
+
+        $patronId = $this->model('LoanModel')->getOverduePatron();
+        $data = [];
+        foreach ($patronId as $patron) {
+            $data = [
+                'PatronId' => $patron['PatronId'],
+                'Subject' => 'Overdue Loan',
+                'Body' => 'You have overdue loan. Please return the book as soon as possible.',
+            ];
+            $this->model('MailModel')->addNewMail($data);
+        }
+
+    }
+
+    public function sendReserveNotif()
+    {
+        session_start();
+        if ($_SESSION['role'] != 'LibraryStaff') {
+            header('Location: ' . BASE_URL . '/login');
+        }
+
+        $patronId = $this->model('ReservationModel')->getReadyReservation();
+        $data = [];
+        foreach ($patronId as $patron) {
+            $data = [
+                'PatronId' => $patron['PatronId'],
+                'Subject' => 'Reservation Ready',
+                'Body' => 'Your reservation is ready. Please come to the library to take the book.',
+            ];
+            $this->model('MailModel')->addNewMail($data);
+        }
+
+        header('Location: ' . BASE_URL . '/staff/reservation');
+    }
+
+    public function sendFineNotif()
+    {
+        session_start();
+        if ($_SESSION['role'] != 'LibraryStaff') {
+            header('Location: ' . BASE_URL . '/login');
+        }
+
+        $patronId = $this->model('FineModel')->getUnpaidFine();
+        $data = [];
+        if ($patronId != null) {
+            foreach ($patronId as $patron) {
+                $data = [
+                    'PatronId' => $patron['PatronId'],
+                    'Subject' => 'Unpaid Fine',
+                    'Body' => 'You have unpaid fine. Please pay the fine as soon as possible.',
+                ];
+                $this->model('MailModel')->addNewMail($data);
+            }
+        }
     }
 
     public function logout()

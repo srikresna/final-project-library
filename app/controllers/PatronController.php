@@ -72,9 +72,9 @@ class Patron extends Controller
                 $data['targetedBook'][0]['PatronId'] = $data['userID'];
                 $data['targetedBook'][0]['ReservationDate'] = $date;
                 if ($this->model('ReservationModel')->addNewReservation($data['targetedBook'][0])) {
-                    header('Location: ' . BASE_URL . '/patron/reservation&success=true');
+                    header('Location: ' . BASE_URL . '/patron/reservation?success=true');
                 } else {
-                    header('Location: ' . BASE_URL . '/patron/reservation&error=date_taken');
+                    header('Location: ' . BASE_URL . '/patron/reservation?error=date_taken');
                 }
                 exit;
             } else {
@@ -147,7 +147,18 @@ class Patron extends Controller
             exit;
         }
 
-        $data['title'] = 'Return';
+        $data['mail'] = $this->model('MailModel')->getMailById($_SESSION['PatronId']);
+        $data['batchMail'] = $this->model('MailModel')->getAllBatchMail();
+        $data['title'] = 'Information';
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_POST['deleteButton'])) {
+                var_dump($_POST['deleteButton']);
+                
+                $this->model('MailModel')->deleteMail($_POST['deleteButton']);
+                header('Location: ' . BASE_URL . '/patron/information');
+                exit;
+            }
+        }
         $this->view('templates/headerPatron', $data);
         $this->view('patron/information', $data);
     }
