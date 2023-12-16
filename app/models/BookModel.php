@@ -58,9 +58,9 @@ class BookModel
         $author = $this->sanitizeInput($data['author']);
         $genre = $this->sanitizeInput($data['genre']);
         $pubyear = $this->sanitizeInput($data['publication_year']);
-        $qtyAvail = $this->sanitizeInput($data['quantity_available']);
-        $qtyTotal = $this->sanitizeInput($data['quantity_total']);
-        $query = "INSERT INTO $this->table VALUES (:isbn, :title, :author, :genre, :pubyear, :qtyAvail, :qtyTotal)";
+        $qtyAvail = intval($this->sanitizeInput($data['quantity_available']));
+        $qtyTotal = intval($this->sanitizeInput($data['quantity_total']));
+        $query = "EXEC AddNewBook @isbn = :isbn, @title = :title, @author = :author, @genre = :genre, @pubyear = :pubyear, @qtyAvail = :qtyAvail, @qtyTotal = :qtyTotal";
         $this->connect->query($query);
         $this->connect->bind('isbn', $isbn);
         $this->connect->bind('title', $title);

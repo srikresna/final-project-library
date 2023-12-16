@@ -17,3 +17,9 @@ DROP TABLE IF EXISTS [dbo].[Reservation];
 DROP TABLE IF EXISTS [dbo].[LibraryStaff];
 DROP TABLE IF EXISTS [dbo].[User];
 DROP TABLE IF EXISTS [dbo].[Mail];
+
+-- drop all db function
+DROP FUNCTION IF EXISTS [dbo].[CalculateTotalFine];
+
+-- drop all db procedure
+DROP PROCEDURE IF EXISTS [dbo].[AddNewBook];
