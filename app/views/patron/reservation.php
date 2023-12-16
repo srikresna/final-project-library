@@ -13,7 +13,7 @@
             <h1>Current Loans</h1>
         </div>
         <div class="card-body">
-            <table class="table">
+            <table class="table text-center table-hover">
                 <thead>
                     <tr>
                         <th>Book Title</th>
@@ -38,7 +38,7 @@
             <h1>Current Reservation</h1>
         </div>
         <div class="card-body">
-            <table class="table">
+            <table class="table text-center table-hover">
                 <thead>
                     <tr>
                         <th>Book Title</th>
@@ -58,8 +58,10 @@
             </table>
         </div>
     </div>
-    <h1>Reservation History</h1>
-    <table class="table">
+    <div class="mt-3">
+        <h1 class="fw-bold">Reservation History</h1>
+    </div>
+    <table class="table table-hover text-center table-striped">
         <thead>
             <tr>
                 <th>Book Title</th>
@@ -118,7 +120,7 @@
     const submitRes = document.querySelector('#submit_res');
     const isbn = document.querySelector('#isbn');
     const reservationDate = document.querySelector('#reservationDate');
-    
+
     isbn.addEventListener('input', () => {
         const regex13 = /^[0-9]{13}$/;
         if (regex13.test(isbn.value)) {

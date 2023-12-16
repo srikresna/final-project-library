@@ -1,13 +1,13 @@
-<div class="container">
-    <h1>Loan</h1>
+<div class="container mt-3">
+    <h1 class="fw-bold">Loan</h1>
 
     <div class="row">
         <div class="col-md-6">
-            <h2>Your Loan</h2>
+            <h3>Your Loan</h3>
         </div>
     </div>
 
-    <table class="table">
+    <table class="table table-striped table-hover text-center">
         <thead>
             <tr>
                 <th>ISBN</th>

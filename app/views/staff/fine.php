@@ -1,9 +1,9 @@
-<div class="container">
-    <h1>Fine</h1>
+<div class="container mt-3">
+    <h1 class="fw-bold">Fine</h1>
 
     <div class="row">
         <div class="col-md-6">
-            <h2>List of Fine</h2>
+            <h3>List of Fine</h3>
         </div>
         <div class="col-md-6">
             <form action="<?= BASE_URL; ?>/staff/reservation" method="post">
@@ -21,33 +21,35 @@
         </div>
     </div>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Patron</th>
-                <th>Amount</th>
-                <th>Payment Status</th>
-                <th>Due Date</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($data['fine'] as $fine) : ?>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover text-center">
+            <thead>
                 <tr>
-                    <td><?php echo $fine['FirstName']; ?></td>
-                    <td><?php echo $fine['Amount']; ?></td>
-                    <td><?php echo $fine['PaymentStatus']; ?></td>
-                    <td><?php echo $fine['DueDate']; ?></td>
-                    <form id="paid-form" action="<?= BASE_URL; ?>/staff/markPaid" method="post">
-                        <input type="hidden" id="paid-form-patronId" name="patronId" value="<?php echo $fine['PatronId']; ?>">
-                        <td>
-                            <button class="btn btn-primary paid-button" data-id="<?php echo $fine['PatronId'] ?>"><i class="bi bi-check"></i> Mark as Paid</button>
-                        </td>
-                    </form>
+                    <th>Patron</th>
+                    <th>Amount</th>
+                    <th>Payment Status</th>
+                    <th>Due Date</th>
+                    <th>Actions</th>
                 </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <?php foreach ($data['fine'] as $fine) : ?>
+                    <tr>
+                        <td><?php echo $fine['FirstName']; ?></td>
+                        <td><?php echo $fine['Amount']; ?></td>
+                        <td><?php echo $fine['PaymentStatus']; ?></td>
+                        <td><?php echo $fine['DueDate']; ?></td>
+                        <form id="paid-form" action="<?= BASE_URL; ?>/staff/markPaid" method="post">
+                            <input type="hidden" id="paid-form-patronId" name="patronId" value="<?php echo $fine['PatronId']; ?>">
+                            <td>
+                                <button class="btn btn-primary paid-button" data-id="<?php echo $fine['PatronId'] ?>"><i class="bi bi-check"></i> Mark as Paid</button>
+                            </td>
+                        </form>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
     <div class="row">
         <div class="btn-primary text-center d-grid gap-2">
             <a href="<?= BASE_URL; ?>/staff/checkOverdueFine" class="btn btn-primary btn-add">Check & Assess Overdue Fine</a>

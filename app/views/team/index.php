@@ -92,7 +92,7 @@
       <img src="<?=BASE_URL; ?>/img/male1.png" alt="Sri Kresna Maha Dewa">
       <div class="member-info">
         <p style="font-weight: bold;">Sri Kresna</p>
-        <p>Number 25</p>
+        <p>Number 23</p>
       </div>
     </div>
   </section>

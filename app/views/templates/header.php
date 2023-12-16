@@ -11,20 +11,22 @@
         body {
             font-family: 'Poppins', sans-serif;
         }
-
+        .navbar-nav.right {
+            margin-left: auto;
+        }
     </style>
     <title><?= $data['title']; ?></title>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-md-top" data-bs-theme="dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="<?= BASE_URL; ?>/home">Library</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav right">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="<?= BASE_URL; ?>/home">Home</a>
                     </li>

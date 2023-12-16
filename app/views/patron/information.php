@@ -1,5 +1,5 @@
-<div class="container">
-    <h1>Information</h1>
+<div class="container mt-3">
+    <h1 class="fw-bold">Information</h1>
     <br>
     <div class="d-flex flex-row-reverse mb-2">
         <form action="<?= BASE_URL; ?>/patron/information" method="post">

@@ -1,9 +1,9 @@
-<div class="container">
-    <h1>Reservation</h1>
+<div class="container mt-3">
+    <h1 class="fw-bold">Reservation</h1>
 
     <div class="row">
         <div class="col-md-6">
-            <h2>List of Reservation</h2>
+            <h3>List of Reservation</h3>
         </div>
         <div class="col-md-6">
             <form action="<?= BASE_URL; ?>/staff/reservation" method="post">
@@ -21,31 +21,33 @@
         </div>
     </div>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Patron</th>
-                <th>ISBN</th>
-                <th>Title</th>
-                <th>Reservation Date</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($data['reserve'] as $res) : ?>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover text-center">
+            <thead>
                 <tr>
-                    <td><?php echo $res['FirstName']; ?></td>
-                    <td><?php echo $res['ISBN']; ?></td>
-                    <td><?php echo $res['Title']; ?></td>
-                    <td><?php echo $res['ReservationDate']; ?></td>
-                    <td>
-                        <button class="btn btn-primary edit-button" data-id="<?php echo htmlspecialchars(json_encode($res), ENT_QUOTES, 'UTF-8'); ?>" data-bs-toggle="modal" data-bs-target="#edit-modal"><i class="bi bi-pencil-fill"></i></button>
-                        <button class="btn btn-danger delete-button" data-id="<?php echo $res['PatronId']; ?>" data-bs-toggle="modal" data-bs-target="#delete-modal"><i class="bi bi-trash-fill"></i></button>
-                    </td>
+                    <th>Patron</th>
+                    <th>ISBN</th>
+                    <th>Title</th>
+                    <th>Reservation Date</th>
+                    <th>Actions</th>
                 </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <?php foreach ($data['reserve'] as $res) : ?>
+                    <tr>
+                        <td><?php echo $res['FirstName']; ?></td>
+                        <td><?php echo $res['ISBN']; ?></td>
+                        <td><?php echo $res['Title']; ?></td>
+                        <td><?php echo $res['ReservationDate']; ?></td>
+                        <td>
+                            <button class="btn btn-primary edit-button" data-id="<?php echo htmlspecialchars(json_encode($res), ENT_QUOTES, 'UTF-8'); ?>" data-bs-toggle="modal" data-bs-target="#edit-modal"><i class="bi bi-pencil-fill"></i></button>
+                            <button class="btn btn-danger delete-button" data-id="<?php echo $res['PatronId']; ?>" data-bs-toggle="modal" data-bs-target="#delete-modal"><i class="bi bi-trash-fill"></i></button>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
     <div class="row">
         <div class="btn-primary text-center d-grid gap-2">
             <a class="btn btn-primary btn-add" data-bs-toggle="modal" data-bs-target="#add-modal">Add Reservation</a>
@@ -181,7 +183,7 @@
     });
 
     const reservationDateEdit = document.querySelector('#edit-form-date');
-    const reservationDateAdd = document.querySelector('#add-form-date');    
+    const reservationDateAdd = document.querySelector('#add-form-date');
     const today = new Date().toISOString().split('T')[0];
     reservationDateEdit.setAttribute('min', today);
     reservationDateAdd.setAttribute('min', today);

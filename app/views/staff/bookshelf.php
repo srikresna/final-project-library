@@ -1,9 +1,9 @@
-<div class="container">
-    <h1>Bookshelf</h1>
+<div class="container mt-3">
+    <h1 class="fw-bold">Bookshelf</h1>
 
     <div class="row">
         <div class="col-md-6">
-            <h2>List of Books</h2>
+            <h3>List of Books</h3>
         </div>
         <div class="col-md-6">
             <form action="<?= BASE_URL; ?>/staff/bookshelf" method="post">
@@ -20,37 +20,39 @@
             </form>
         </div>
     </div>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>ISBN</th>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Genre</th>
-                <th>Publication Year</th>
-                <th>Quantity Available</th>
-                <th>Quantity Total</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($data['books'] as $book) : ?>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover text-center">
+            <thead>
                 <tr>
-                    <td><?php echo $book['ISBN']; ?></td>
-                    <td><?php echo $book['Title']; ?></td>
-                    <td><?php echo $book['Author']; ?></td>
-                    <td><?php echo $book['Genre']; ?></td>
-                    <td><?php echo $book['PublicationYear']; ?></td>
-                    <td><?php echo $book['QuantityAvailable']; ?></td>
-                    <td><?php echo $book['QuantityTotal']; ?></td>
-                    <td>
-                        <button class="btn btn-primary edit-button" data-id="<?php echo htmlspecialchars(json_encode($book), ENT_QUOTES, 'UTF-8'); ?>" data-bs-toggle="modal" data-bs-target="#edit-modal"><i class="bi bi-pencil-fill"></i></button>
-                        <button class="btn btn-danger delete-button" data-id="<?php echo $book['ISBN']; ?>" data-bs-toggle="modal" data-bs-target="#delete-modal"><i class="bi bi-trash-fill"></i></button>
-                    </td>
+                    <th>ISBN</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Genre</th>
+                    <th>Publication Year</th>
+                    <th>Quantity Available</th>
+                    <th>Quantity Total</th>
+                    <th>Actions</th>
                 </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <?php foreach ($data['books'] as $book) : ?>
+                    <tr>
+                        <td><?php echo $book['ISBN']; ?></td>
+                        <td><?php echo $book['Title']; ?></td>
+                        <td><?php echo $book['Author']; ?></td>
+                        <td><?php echo $book['Genre']; ?></td>
+                        <td><?php echo $book['PublicationYear']; ?></td>
+                        <td><?php echo $book['QuantityAvailable']; ?></td>
+                        <td><?php echo $book['QuantityTotal']; ?></td>
+                        <td>
+                            <button class="btn btn-primary edit-button" data-id="<?php echo htmlspecialchars(json_encode($book), ENT_QUOTES, 'UTF-8'); ?>" data-bs-toggle="modal" data-bs-target="#edit-modal"><i class="bi bi-pencil-fill"></i></button>
+                            <button class="btn btn-danger delete-button" data-id="<?php echo $book['ISBN']; ?>" data-bs-toggle="modal" data-bs-target="#delete-modal"><i class="bi bi-trash-fill"></i></button>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
     <div class="row">
         <div class="btn-primary text-center d-grid gap-2">
             <a class="btn btn-primary btn-add" data-bs-toggle="modal" data-bs-target="#add-modal">Add Book</a>
@@ -131,7 +133,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="edit-form-publication-year" class="form-label">Publication Year</label>
-                        <input type="date" class="form-control" id="edit-form-publication-year" name="publication_year"> 
+                        <input type="date" class="form-control" id="edit-form-publication-year" name="publication_year">
                     </div>
                     <div class="mb-3">
                         <label for="edit-form-quantity-available" class="form-label">Quantity Available</label>
@@ -169,7 +171,6 @@
         </div>
     </div>
 </div>
-
 
 <script>
     document.querySelectorAll('.dropdown-item').forEach(item => {

@@ -12,7 +12,9 @@
         body {
             font-family: 'Poppins', sans-serif;
         }
-
+        .navbar-nav.right {
+            margin-left: auto;
+        }
     </style>
     <title><?= $data['title']; ?></title>
 </head>
@@ -25,7 +27,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav right">
                     <li class="nav-item">
                         <a class="nav-link" href="<?= BASE_URL; ?>/staff/index">Home</a>
                     </li>
