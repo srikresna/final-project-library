@@ -34,36 +34,19 @@ class LoanModel
     {
         $bookId = $this->sanitizeInput($data['BookId']);
         $patronId = $this->sanitizeInput($data['PatronId']);
+        $loanDate = date("Y-m-d");
+        $dueDate = date("Y-m-d", strtotime($loanDate . '+ 7 days'));
 
-        // Lock the book record to prevent concurrent updates
-        $this->connect->beginTransaction();
+        // Call the AddNewLoan stored procedure
+        $query = "EXEC AddNewLoan :bookId, :patronId, :loanDate, :dueDate";
+        $this->connect->query($query);
+        $this->connect->bind('bookId', $bookId);
+        $this->connect->bind('patronId', $patronId);
+        $this->connect->bind('loanDate', $loanDate);
+        $this->connect->bind('dueDate', $dueDate);
+        $this->connect->execute();
 
-        // Check if the book is available
-        $bookModel = new BookModel();
-        $currentQuantity = $bookModel->getQuantity($bookId);
-
-        if ($currentQuantity > 0) {
-            // Update the book quantity and add the loan record
-            $newQuantity = $currentQuantity - 1;
-            $bookModel->updateQuantity($bookId, $newQuantity);
-
-            $loanDate = date("Y-m-d");
-            $dueDate = date("Y-m-d", strtotime($loanDate . '+ 7 days'));
-            $query = "INSERT INTO $this->table (BookId, PatronId, LoanDate, DueDate) VALUES (:bookId, :patronId, :loanDate, :dueDate)";
-            $this->connect->query($query);
-            $this->connect->bind('bookId', $bookId);
-            $this->connect->bind('patronId', $patronId);
-            $this->connect->bind('loanDate', $loanDate);
-            $this->connect->bind('dueDate', $dueDate);
-            $this->connect->execute();
-            $this->connect->commit();
-
-            return $this->connect->lastInsertId();
-        } else {
-            // Book is not available, rollback the transaction
-            $this->connect->rollback();
-            return false;
-        }
+        return $this->connect->lastInsertId();
     }
 
     public function returnBook($data)

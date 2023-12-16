@@ -23,3 +23,4 @@ DROP FUNCTION IF EXISTS [dbo].[CalculateTotalFine];
 
 -- drop all db procedure
 DROP PROCEDURE IF EXISTS [dbo].[AddNewBook];
+DROP PROCEDURE IF EXISTS [dbo].[AddNewLoan];
