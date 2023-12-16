@@ -1,9 +1,9 @@
-<div class="container">
-    <h1>Patron</h1>
+<div class="container mt-3">
+    <h1 class="fw-bold">Patron</h1>
 
     <div class="row">
         <div class="col-md-6">
-            <h2>List of Patron</h2>
+            <h3>List of Patron</h3>
         </div>
         <div class="col-md-6">
             <form action="<?= BASE_URL; ?>/staff/patron" method="post">
@@ -21,35 +21,37 @@
         </div>
     </div>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>Phone Number</th>
-                <th>Address</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($data['patron'] as $user) : ?>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover text-center">
+            <thead>
                 <tr>
-                    <td><?php echo $user['PatronId']; ?></td>
-                    <td><?php echo $user['FirstName']; ?></td>
-                    <td><?php echo $user['LastName']; ?></td>
-                    <td><?php echo $user['Email']; ?></td>
-                    <td><?php echo $user['PhoneNumber']; ?></td>
-                    <td><?php echo $user['Address']; ?></td>
-                    <td>
-                        <button class="btn btn-primary edit-button" data-id="<?php echo htmlspecialchars(json_encode($user), ENT_QUOTES, 'UTF-8'); ?>" data-bs-toggle="modal" data-bs-target="#edit-modal"><i class="bi bi-pencil-fill"></i></button>
-                        <button class="btn btn-danger delete-button" data-id="<?php echo $user['PatronId']; ?>" data-bs-toggle="modal" data-bs-target="#delete-modal"><i class="bi bi-trash-fill"></i></button>
-                    </td>
+                    <th>ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Address</th>
+                    <th>Actions</th>
                 </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <?php foreach ($data['patron'] as $user) : ?>
+                    <tr>
+                        <td><?php echo $user['PatronId']; ?></td>
+                        <td><?php echo $user['FirstName']; ?></td>
+                        <td><?php echo $user['LastName']; ?></td>
+                        <td><?php echo $user['Email']; ?></td>
+                        <td><?php echo $user['PhoneNumber']; ?></td>
+                        <td><?php echo $user['Address']; ?></td>
+                        <td>
+                            <button class="btn btn-primary edit-button" data-id="<?php echo htmlspecialchars(json_encode($user), ENT_QUOTES, 'UTF-8'); ?>" data-bs-toggle="modal" data-bs-target="#edit-modal"><i class="bi bi-pencil-fill"></i></button>
+                            <button class="btn btn-danger delete-button" data-id="<?php echo $user['PatronId']; ?>" data-bs-toggle="modal" data-bs-target="#delete-modal"><i class="bi bi-trash-fill"></i></button>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
     <div class="row">
         <div class="btn-primary text-center d-grid gap-2">
             <a class="btn btn-primary btn-add" data-bs-toggle="modal" data-bs-target="#add-modal">Add Patron</a>

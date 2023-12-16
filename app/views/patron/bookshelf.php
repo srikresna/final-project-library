@@ -1,9 +1,8 @@
-<div class="container">
-    <h1>Bookshelf</h1>
-
+<div class="container mt-3">
+    <h1 class="fw-bold">Bookshelf</h1>
     <div class="row">
         <div class="col-md-6">
-            <h2>Available Books</h2>
+            <h3>Available Books</h3>
         </div>
         <div class="col-md-6">
             <form action="<?= BASE_URL; ?>/patron/bookshelf" method="post">
@@ -21,37 +20,38 @@
         </div>
     </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ISBN</th>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Genre</th>
-                <th>Publication Year</th>
-                <th>Quantity Available</th>
-                <th>Quantity Total</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($data['books'] as $book) : ?>
+    <div class="table-responsive">
+        <table class="table table-hover table-striped text-center">
+            <thead>
                 <tr>
-                    <td><?php echo $book['ISBN']; ?></td>
-                    <td><?php echo $book['Title']; ?></td>
-                    <td><?php echo $book['Author']; ?></td>
-                    <td><?php echo $book['Genre']; ?></td>
-                    <td><?php echo $book['PublicationYear']; ?></td>
-                    <td><?php echo $book['QuantityAvailable']; ?></td>
-                    <td><?php echo $book['QuantityTotal']; ?></td>
-                    <td>
-                        <a href="#" class="btn btn-primary btn-borrow" data-bs-toggle="modal" data-bs-target="#borrowModal" data-book="<?php echo htmlspecialchars(json_encode($book), ENT_QUOTES, 'UTF-8'); ?>">Borrow</a>
-                    </td>
+                    <th>ISBN</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Genre</th>
+                    <th>Publication Year</th>
+                    <th>Quantity Available</th>
+                    <th>Quantity Total</th>
+                    <th>Actions</th>
                 </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-
+            </thead>
+            <tbody>
+                <?php foreach ($data['books'] as $book) : ?>
+                    <tr>
+                        <td><?php echo $book['ISBN']; ?></td>
+                        <td><?php echo $book['Title']; ?></td>
+                        <td><?php echo $book['Author']; ?></td>
+                        <td><?php echo $book['Genre']; ?></td>
+                        <td><?php echo $book['PublicationYear']; ?></td>
+                        <td><?php echo $book['QuantityAvailable']; ?></td>
+                        <td><?php echo $book['QuantityTotal']; ?></td>
+                        <td>
+                            <a href="#" class="btn btn-primary btn-borrow" data-bs-toggle="modal" data-bs-target="#borrowModal" data-book="<?php echo htmlspecialchars(json_encode($book), ENT_QUOTES, 'UTF-8'); ?>">Borrow</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
     <script>
         document.querySelectorAll('.dropdown-item').forEach(item => {
             item.addEventListener('click', function(e) {
@@ -80,12 +80,11 @@
 
         document.querySelectorAll('.btn-borrow').forEach(item => {
             if (item.parentNode.parentNode.children[5].innerText == 0) {
-                item.classList.add('btn-danger'); 
+                item.classList.add('btn-danger');
                 item.innerText = 'Reserve';
                 item.setAttribute('data-bs-target', '#reserveModal');
             }
         });
-
     </script>
 
 </div>

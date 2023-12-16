@@ -18,7 +18,7 @@
     <br><br>
     <h5>Table Information for Patron</h5>
     <hr>
-    <table class="table table-striped">
+    <table class="table table-striped text-center">
         <thead>
             <tr>
                 <th>Patron</th>
@@ -47,7 +47,7 @@
     <br>
     <h5>Table Information for Book</h5>
     <hr>
-    <table class="table table-striped">
+    <table class="table table-striped text-center">
         <thead>
             <tr>
                 <th>Title</th>

@@ -23,7 +23,7 @@
     }
 
     #login-header {
-      background-color: #f39c12;
+      background-color: #334155;
       padding: 20px;
       text-align: center;
       color: #fff;

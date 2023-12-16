@@ -1,5 +1,5 @@
-<div class="container">
-    <h1>Report</h1>
+<div class="container mt-3">
+    <h1 class="fw-bold">Report</h1>
 
     <div class="row">
         <div class="col-md-6">
@@ -17,57 +17,61 @@
 
     <h5>Table Information for Patron</h5>
     <hr>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Patron</th>
-                <th>Phone</th>
-                <th>Total Return</th>
-                <th>Total Unreturn</th>
-                <th>Total Overdue</th>
-                <th>Total Fine</th>
-                <th>Unpaid Fine</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($data['reportUser'] as $report) : ?>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover text-center">
+            <thead>
                 <tr>
-                    <td><?php echo $report['FirstName']; ?></td>
-                    <td><?php echo $report['PhoneNumber']; ?></td>
-                    <td><?php echo $report['TotalReturned']; ?></td>
-                    <td><?php echo $report['TotalNotReturned']; ?></td>
-                    <td><?php echo $report['TotalOverdue']; ?></td>
-                    <td><?php echo $report['TotalFine']; ?></td>
-                    <td><?php echo $report['UnpaidFine']; ?></td>
+                    <th>Patron</th>
+                    <th>Phone</th>
+                    <th>Total Return</th>
+                    <th>Total Unreturn</th>
+                    <th>Total Overdue</th>
+                    <th>Total Fine</th>
+                    <th>Unpaid Fine</th>
                 </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <?php foreach ($data['reportUser'] as $report) : ?>
+                    <tr>
+                        <td><?php echo $report['FirstName']; ?></td>
+                        <td><?php echo $report['PhoneNumber']; ?></td>
+                        <td><?php echo $report['TotalReturned']; ?></td>
+                        <td><?php echo $report['TotalNotReturned']; ?></td>
+                        <td><?php echo $report['TotalOverdue']; ?></td>
+                        <td><?php echo $report['TotalFine']; ?></td>
+                        <td><?php echo $report['UnpaidFine']; ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
     <br>
     <h5>Table Information for Book</h5>
     <hr>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>ISBN</th>
-                <th>Total Loans</th>
-                <th>Total Unreturn</th>
-                <th>Total Overdue</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($data['reportBook'] as $book) : ?>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover text-center">
+            <thead>
                 <tr>
-                    <td><?php echo $book['Title']; ?></td>
-                    <td><?php echo $book['ISBN']; ?></td>
-                    <td><?php echo $book['TotalLoaned']; ?></td>
-                    <td><?php echo $book['TotalNotReturned']; ?></td>
-                    <td><?php echo $book['TotalOverdue']; ?></td>
+                    <th>Title</th>
+                    <th>ISBN</th>
+                    <th>Total Loans</th>
+                    <th>Total Unreturn</th>
+                    <th>Total Overdue</th>
                 </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <?php foreach ($data['reportBook'] as $book) : ?>
+                    <tr>
+                        <td><?php echo $book['Title']; ?></td>
+                        <td><?php echo $book['ISBN']; ?></td>
+                        <td><?php echo $book['TotalLoaned']; ?></td>
+                        <td><?php echo $book['TotalNotReturned']; ?></td>
+                        <td><?php echo $book['TotalOverdue']; ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
     <br>
     <div class="row">
         <div class="btn-primary text-center d-grid gap-2">
