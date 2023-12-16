@@ -519,12 +519,12 @@ class Staff extends Controller
 
         if (isset($_POST['keyword'])) {
             $keyword = $_POST['keyword'];
-            $data['report'] = $this->model('LoanModel')->getReportSpecificUser($keyword);
+            $data['reportUser'] = $this->model('ReportModel')->getReportSpecificUser($keyword);
         } else {
-            $data['reportUser'] = $this->model('LoanModel')->getReportUser();
+            $data['reportUser'] = $this->model('ReportModel')->getReportUser();
         }
 
-        $data['reportBook'] = $this->model('LoanModel')->getReportBook();
+        $data['reportBook'] = $this->model('ReportModel')->getReportBook();
         $data['title'] = 'Report';
         $this->view('templates/headerStaff', $data);
         $this->view('staff/report', $data);
@@ -537,8 +537,8 @@ class Staff extends Controller
             header('Location: ' . BASE_URL . '/login');
             exit;
         }
-        $data['reportUser'] = $this->model('LoanModel')->getReportUser();
-        $data['reportBook'] = $this->model('LoanModel')->getReportBook();
+        $data['reportUser'] = $this->model('ReportModel')->getReportUser();
+        $data['reportBook'] = $this->model('ReportModel')->getReportBook();
 
         $data['title'] = 'Report';
         $this->view('staff/printReport', $data);

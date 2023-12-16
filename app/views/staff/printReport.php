@@ -27,6 +27,7 @@
                 <th>Total Unreturn</th>
                 <th>Total Overdue</th>
                 <th>Total Fine</th>
+                <th>Unpaid Fine</th>
             </tr>
         </thead>
         <tbody>
@@ -38,6 +39,7 @@
                     <td><?php echo $report['TotalNotReturned']; ?></td>
                     <td><?php echo $report['TotalOverdue']; ?></td>
                     <td><?php echo $report['TotalFine']; ?></td>
+                    <td><?php echo $report['UnpaidFine']; ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

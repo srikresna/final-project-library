@@ -73,12 +73,4 @@ class FineModel {
         $this->connect->execute();
     }
 
-    // DB function to calculate total fine of a patron
-    public function getTotalFine($patronID) {
-        $query = "SELECT SUM(Amount) AS TotalFine FROM $this->table WHERE PatronID = :patronID";
-        $this->connect->query($query);
-        $this->connect->bind('patronID', $patronID);
-        $this->connect->execute();
-        return $this->connect->resultSet();
-    }
 }
