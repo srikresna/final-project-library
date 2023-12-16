@@ -53,9 +53,15 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item btn-mark-return" href="#" data-book-id="<?php echo $loan['BookId']; ?>" data-patron-id="<?php echo $loan['PatronId']; ?>">
-                                        Mark as Return
-                                    </a>
+                                    <?php if ($loan['ReturnDate'] == null) : ?>
+                                        <a class="dropdown-item btn-mark-return" href="#" data-book-id="<?php echo $loan['BookId']; ?>" data-patron-id="<?php echo $loan['PatronId']; ?>">
+                                            Mark as Return
+                                        </a>
+                                    <?php else : ?>
+                                        <a class="dropdown-item" href="#">
+                                            Already Returned
+                                        </a>
+                                    <?php endif; ?>
                                 </li>
                                 <li>
                                     <a class="dropdown-item text-danger btn-delete" href="#" data-book-id="<?php echo $loan['BookId']; ?>" data-patron-id="<?php echo $loan['PatronId']; ?>">
@@ -165,6 +171,11 @@
             document.getElementById('return-book-id').value = bookId;
             document.getElementById('return-patron-id').value = patronId;
             document.getElementById('return-date').value = returnDate;
+
+            // Change button text to "Already Returned"
+            this.innerText = "Already Returned";
+            this.classList.remove("btn-mark-return");
+            this.classList.add("disabled");
 
             document.getElementById('return-form').submit();
         });
