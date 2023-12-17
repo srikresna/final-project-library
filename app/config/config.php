@@ -1,7 +1,7 @@
 <?php
 
 
-define("BASE_URL", "http://localhost/yws/public");
+define("BASE_URL", "http://localhost/final-project-library/public");
 define('DB_HOST', 'DESKTOP-BPCB1F9');
 define('DB_USER', '');
 define('DB_PASS', '');
