@@ -111,7 +111,7 @@ class Staff extends Controller
                 // message subject new book and body is detail of new book
                 $message = [
                     'Subject' => 'New Book has Arrived',
-                    'Body' => 'New book' . $data['title'] . ' has arrived. Come to the library to borrow it.',
+                    'Body' => 'New book ' . $data['title'] . ' has arrived. Come to the library to borrow it.',
                 ];
                 $this->model('MailModel')->batchMail($message);
 
