@@ -100,9 +100,13 @@
                     </div>
                     <div class="mb-3">
                         <label for="edit-form-password" class="form-label">password</label>
-                        <input type="text" class="form-control" id="edit-form-password" name="password" data-id="<?php echo $user['Password']; ?>">
+                        <input type="password" class="form-control" id="edit-form-password" name="password" data-id="<?php echo $user['Password']; ?>">
+                        <div class="form-check mt-1">
+                            <input class="form-check-input" type="checkbox" id="show-edit-password">
+                            <label class="form-check-label" for="show-edit-password">Show password</label>
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="submit" class="btn btn-primary mt-1">Save changes</button>
                 </form>
             </div>
         </div>
@@ -145,9 +149,13 @@
                     </div>
                     <div class="mb-3">
                         <label for="add-form-password" class="form-label">password</label>
-                        <input type="text" class="form-control" id="add-form-password" name="password">
+                        <input type="password" class="form-control" id="add-form-password" name="password">
+                        <div class="form-check mt-1">
+                            <input class="form-check-input" type="checkbox" id="show-password">
+                            <label class="form-check-label" for="show-password">Show password</label>
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Add Patron</button>
+                    <button type="submit" class="btn btn-primary mt-1">Add Patron</button>
                 </form>
             </div>
         </div>
@@ -205,5 +213,21 @@
             document.getElementById('edit-form-username').value = data.Username;
             document.getElementById('edit-form-password').value = data.Password;
         });
+    });
+
+    document.getElementById('show-password').addEventListener('change', function(e) {
+        if (this.checked) {
+            document.getElementById('add-form-password').type = 'text';
+        } else {
+            document.getElementById('add-form-password').type = 'password';
+        }
+    });
+
+    document.getElementById('show-edit-password').addEventListener('change', function(e) {
+        if (this.checked) {
+            document.getElementById('edit-form-password').type = 'text';
+        } else {
+            document.getElementById('edit-form-password').type = 'password';
+        }
     });
 </script>
