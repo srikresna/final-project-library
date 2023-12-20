@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <script src="<?= BASE_URL; ?>/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap">
+    <link rel="icon" href="<?= BASE_URL; ?>/img/favicon.png">
+
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -16,7 +18,7 @@
             margin-left: auto;
         }
     </style>
-    <title><?= $data['title']; ?></title>
+    <title><?= $data['title']; ?> | Library</title>
 </head>
 
 <body>
