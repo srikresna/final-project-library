@@ -1,3 +1,8 @@
+<?php
+if (isset($_GET['error']) && $_GET['error'] == "date_taken") {
+    echo "<script>alert('Date is already taken!');</script>";
+}
+?>
 <div class="container">
     <div class="d-flex justify-content-between mt-5">
         <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#currentLoans" aria-expanded="false" aria-controls="currentLoans">

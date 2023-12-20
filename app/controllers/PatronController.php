@@ -74,7 +74,7 @@ class Patron extends Controller
                 if ($this->model('ReservationModel')->addNewReservation($data['targetedBook'][0])) {
                     header('Location: ' . BASE_URL . '/patron/reservation?success=true');
                 } else {
-                    header('Location: ' . BASE_URL . '/patron/reservation?error=date_taken');
+                    header('Location: ' . BASE_URL . '/patron/reservation&error=date_taken');
                 }
                 exit;
             } else {

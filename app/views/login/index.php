@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +20,8 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       overflow: hidden;
       width: 300px;
-      margin: 20px auto; /* Center the login container */
+      margin: 20px auto;
+      /* Center the login container */
     }
 
     #login-header {
@@ -44,6 +46,11 @@
       padding: 10px;
       margin-bottom: 15px;
       box-sizing: border-box;
+      transition: box-shadow 0.3s ease;
+    }
+
+    input:hover {
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
     button {
@@ -55,14 +62,20 @@
       cursor: pointer;
       width: 100%;
       font-size: 16px;
+      transition: background-color 0.3s ease;
     }
 
     button:hover {
       background-color: #e67e22;
     }
+
+    button i {
+      margin-right: 5px;
+    }
   </style>
   <title>Library Login</title>
 </head>
+
 <body>
 
   <div class="container">
@@ -85,7 +98,10 @@
                 <input type="password" class="form-control" id="password" name="password" required>
               </div>
               <br>
-              <button type="submit" class="btn btn-primary">Login</button>
+              <button type="submit" class="btn btn-primary">
+                <i class="bi bi-box-arrow-in-right"></i>
+                Login
+              </button>
             </form>
           </div>
         </div>
@@ -94,4 +110,5 @@
   </div>
 
 </body>
+
 </html>
