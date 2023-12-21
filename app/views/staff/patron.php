@@ -20,12 +20,30 @@
             </form>
         </div>
     </div>
-
+    <?php
+    if (isset($_GET['status'])) {
+        if ($_GET['status'] == 'add_success') {
+            echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-plus-circle-fill"></i> Patron successfully added!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>';
+        } else if ($_GET['status'] == 'delete_success') {
+            echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle-fill"></i> Patron successfully deleted!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>';
+        } else if ($_GET['status'] == 'edit_success') {
+            echo '<div class="alert alert-info alert-dismissible fade show" role="alert">
+        <i class="bi bi-pencil-square"></i> Patron successfully edited!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>';
+        }
+    }
+    ?>
     <div class="table-responsive">
         <table class="table table-striped table-hover text-center">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Email</th>
@@ -37,7 +55,6 @@
             <tbody>
                 <?php foreach ($data['patron'] as $user) : ?>
                     <tr>
-                        <td><?php echo $user['PatronId']; ?></td>
                         <td><?php echo $user['FirstName']; ?></td>
                         <td><?php echo $user['LastName']; ?></td>
                         <td><?php echo $user['Email']; ?></td>
@@ -125,31 +142,31 @@
                 <form id="add-form" action="<?= BASE_URL; ?>/staff/addPatron" method="post">
                     <div class="mb-3">
                         <label for="add-form-firstname" class="form-label">Firstname</label>
-                        <input type="text" class="form-control" id="add-form-firstname" name="firstname">
+                        <input type="text" class="form-control" id="add-form-firstname" name="firstname" required>
                     </div>
                     <div class="mb-3">
                         <label for="add-form-lastname" class="form-label">Lastname</label>
-                        <input type="text" class="form-control" id="add-form-lastname" name="lastname">
+                        <input type="text" class="form-control" id="add-form-lastname" name="lastname" required>
                     </div>
                     <div class="mb-3">
                         <label for="add-form-email" class="form-label">Email</label>
-                        <input type="text" class="form-control" id="add-form-email" name="email">
+                        <input type="text" class="form-control" id="add-form-email" name="email" required>
                     </div>
                     <div class="mb-3">
                         <label for="add-form-phonenumber" class="form-label">Phone Number</label>
-                        <input type="text" class="form-control" id="add-form-phonenumber" name="phonenumber">
+                        <input type="text" class="form-control" id="add-form-phonenumber" name="phonenumber" required>
                     </div>
                     <div class="mb-3">
                         <label for="add-form-address" class="form-label">Address</label>
-                        <input type="text" class="form-control" id="add-form-address" name="address">
+                        <input type="text" class="form-control" id="add-form-address" name="address" required>
                     </div>
                     <div class="mb-3">
                         <label for="add-form-username" class="form-label">username</label>
-                        <input type="text" class="form-control" id="add-form-username" name="username">
+                        <input type="text" class="form-control" id="add-form-username" name="username" required>
                     </div>
                     <div class="mb-3">
                         <label for="add-form-password" class="form-label">password</label>
-                        <input type="password" class="form-control" id="add-form-password" name="password">
+                        <input type="password" class="form-control" id="add-form-password" name="password" required>
                         <div class="form-check mt-1">
                             <input class="form-check-input" type="checkbox" id="show-password">
                             <label class="form-check-label" for="show-password">Show password</label>

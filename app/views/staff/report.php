@@ -74,7 +74,7 @@
     </div>
     <br>
     <div class="row">
-        <div class="btn-primary text-center d-grid gap-2">
+        <div class="btn-primary text-center d-grid gap-2 mb-3">
             <a href="<?= BASE_URL; ?>/staff/printReport" class="btn btn-primary">Print Report</a>
         </div>
     </div>

@@ -20,7 +20,31 @@
             </form>
         </div>
     </div>
-
+    <?php
+    if (isset($_GET['status'])) {
+        if ($_GET['status'] == 'add_success') {
+            echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-plus-circle-fill"></i> Reservation successfully added!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>';
+        } else if ($_GET['status'] == 'delete_success') {
+            echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle-fill"></i> Reservation successfully deleted!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>';
+        } else if ($_GET['status'] == 'edit_success') {
+            echo '<div class="alert alert-info alert-dismissible fade show" role="alert">
+        <i class="bi bi-pencil-square"></i> Reservation successfully edited!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>';
+        } else if ($_GET['status'] == 'send_success') {
+            echo '<div class="alert alert-primary alert-dismissible fade show" role="alert">
+            <i class="bi bi-envelope-fill"></i> Reserve notification successfully sent!
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>';
+        }
+    }
+    ?>
     <div class="table-responsive">
         <table class="table table-striped table-hover text-center">
             <thead>

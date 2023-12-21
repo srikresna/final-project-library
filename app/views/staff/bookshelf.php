@@ -1,3 +1,6 @@
+<button id="scroll-down-button" class="btn btn-primary position-fixed bottom-0 end-0 m-3">
+  <i class="bi bi-arrow-down-circle-fill"></i>
+</button>
 <div class="container mt-3">
     <h1 class="fw-bold">Bookshelf</h1>
 
@@ -20,6 +23,26 @@
             </form>
         </div>
     </div>
+    <?php
+    if (isset($_GET['status'])) {
+        if ($_GET['status'] == 'add_success') {
+            echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-plus-circle-fill"></i> Book successfully added!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>';
+        } else if ($_GET['status'] == 'delete_success') {
+            echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle-fill"></i> Book successfully deleted!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>';
+        } else if ($_GET['status'] == 'edit_success') {
+            echo '<div class="alert alert-info alert-dismissible fade show" role="alert">
+        <i class="bi bi-pencil-square"></i> Book successfully edited!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>';
+        }
+    }
+    ?>
     <div class="table-responsive">
         <table class="table table-striped table-hover text-center">
             <thead>
@@ -45,7 +68,7 @@
                         <td><?php echo $book['QuantityAvailable']; ?></td>
                         <td><?php echo $book['QuantityTotal']; ?></td>
                         <td>
-                            <button class="btn btn-primary edit-button" data-id="<?php echo htmlspecialchars(json_encode($book), ENT_QUOTES, 'UTF-8'); ?>" data-bs-toggle="modal" data-bs-target="#edit-modal"><i class="bi bi-pencil-fill"></i></button>
+                            <button class="btn btn-primary edit-button mb-1" data-id="<?php echo htmlspecialchars(json_encode($book), ENT_QUOTES, 'UTF-8'); ?>" data-bs-toggle="modal" data-bs-target="#edit-modal"><i class="bi bi-pencil-fill"></i></button>
                             <button class="btn btn-danger delete-button" data-id="<?php echo $book['ISBN']; ?>" data-bs-toggle="modal" data-bs-target="#delete-modal"><i class="bi bi-trash-fill"></i></button>
                         </td>
                     </tr>
@@ -54,7 +77,7 @@
         </table>
     </div>
     <div class="row">
-        <div class="btn-primary text-center d-grid gap-2">
+        <div class="btn-primary text-center d-grid gap-2 mb-3">
             <a class="btn btn-primary btn-add" data-bs-toggle="modal" data-bs-target="#add-modal">Add Book</a>
         </div>
     </div>
@@ -117,31 +140,31 @@
                     <input type="hidden" id="edit-form-id">
                     <div class="mb-3">
                         <label for="edit-form-isbn" class="form-label">ISBN</label>
-                        <input type="text" class="form-control" id="edit-form-isbn" name="isbn">
+                        <input type="text" class="form-control" id="edit-form-isbn" name="isbn" required>
                     </div>
                     <div class="mb-3">
                         <label for="edit-form-title" class="form-label">Title</label>
-                        <input type="text" class="form-control" id="edit-form-title" name="title">
+                        <input type="text" class="form-control" id="edit-form-title" name="title" required>
                     </div>
                     <div class="mb-3">
                         <label for="edit-form-author" class="form-label">Author</label>
-                        <input type="text" class="form-control" id="edit-form-author" name="author">
+                        <input type="text" class="form-control" id="edit-form-author" name="author" required>
                     </div>
                     <div class="mb-3">
                         <label for="edit-form-genre" class="form-label">Genre</label>
-                        <input type="text" class="form-control" id="edit-form-genre" name="genre">
+                        <input type="text" class="form-control" id="edit-form-genre" name="genre" required>
                     </div>
                     <div class="mb-3">
                         <label for="edit-form-publication-year" class="form-label">Publication Year</label>
-                        <input type="date" class="form-control" id="edit-form-publication-year" name="publication_year">
+                        <input type="date" class="form-control" id="edit-form-publication-year" name="publication_year" required>
                     </div>
                     <div class="mb-3">
                         <label for="edit-form-quantity-available" class="form-label">Quantity Available</label>
-                        <input type="text" class="form-control" id="edit-form-quantity-available" name="quantity_available">
+                        <input type="text" class="form-control" id="edit-form-quantity-available" name="quantity_available" required>
                     </div>
                     <div class="mb-3">
                         <label for="edit-form-quantity-total" class="form-label">Quantity Total</label>
-                        <input type="text" class="form-control" id="edit-form-quantity-total" name="quantity_total">
+                        <input type="text" class="form-control" id="edit-form-quantity-total" name="quantity_total" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Save changes</button>
                 </form>
@@ -198,6 +221,13 @@
             document.getElementById('edit-form-publication-year').value = bookData.PublicationYear;
             document.getElementById('edit-form-quantity-available').value = bookData.QuantityAvailable;
             document.getElementById('edit-form-quantity-total').value = bookData.QuantityTotal;
+        });
+    });
+
+    document.getElementById('scroll-down-button').addEventListener('click', function() {
+        window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: 'smooth'
         });
     });
 </script>

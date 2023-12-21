@@ -63,7 +63,7 @@ class Staff extends Controller
                 ];
                 $this->model('BookModel')->updateBook($data);
 
-                header('Location: ' . BASE_URL . '/staff/bookshelf');
+                header('Location: ' . BASE_URL . '/staff/bookshelf&status=edit_success');
                 exit;
             }
         }
@@ -82,7 +82,7 @@ class Staff extends Controller
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_POST['isbn'])) {
                 $this->model('BookModel')->deleteBook($_POST['isbn']);
-                header('Location: ' . BASE_URL . '/staff/bookshelf');
+                header('Location: ' . BASE_URL . '/staff/bookshelf&status=delete_success');
                 exit;
             }
         }
@@ -115,7 +115,7 @@ class Staff extends Controller
                 ];
                 $this->model('MailModel')->batchMail($message);
 
-                header('Location: ' . BASE_URL . '/staff/bookshelf');
+                header('Location: ' . BASE_URL . '/staff/bookshelf&status=add_success');
                 exit;
             }
         }
@@ -174,7 +174,7 @@ class Staff extends Controller
                 $this->model('PatronModel')->updatePatron($dataPatron);
                 $this->model('UserModel')->updateUser($dataUser);
 
-                header('Location: ' . BASE_URL . '/staff/patron');
+                header('Location: ' . BASE_URL . '/staff/patron&status=edit_success');
                 exit;
             }
         }
@@ -191,7 +191,7 @@ class Staff extends Controller
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_POST['patronId'])) {
                 $this->model('PatronModel')->deletePatron($_POST['patronId']);
-                header('Location: ' . BASE_URL . '/staff/patron');
+                header('Location: ' . BASE_URL . '/staff/patron&status=delete_success');
                 exit;
             }
         }
@@ -224,7 +224,7 @@ class Staff extends Controller
                 ];
                 $this->model('UserModel')->addNewUserPatron($dataUser);
 
-                header('Location: ' . BASE_URL . '/staff/patron');
+                header('Location: ' . BASE_URL . '/staff/patron&status=add_success');
                 exit;
             }
         }
@@ -279,7 +279,7 @@ class Staff extends Controller
 
                 $this->model('LoanModel')->addNewLoan($data);
 
-                header('Location: ' . BASE_URL . '/staff/loan');
+                header('Location: ' . BASE_URL . '/staff/loan&status=add_success');
                 exit;
             }
         }
@@ -302,7 +302,7 @@ class Staff extends Controller
 
                 $this->model('LoanModel')->returnBook($data);
 
-                header('Location: ' . BASE_URL . '/staff/loan');
+                header('Location: ' . BASE_URL . '/staff/loan&status=mark_success');
                 exit;
             }
         }
@@ -325,7 +325,7 @@ class Staff extends Controller
                 ];
                 $this->model('FineModel')->addNewFine($data);
 
-                header('Location: ' . BASE_URL . '/staff/loan');
+                header('Location: ' . BASE_URL . '/staff/loan&status=assess_success');
                 exit;
             }
         }
@@ -347,7 +347,7 @@ class Staff extends Controller
 
                 $this->model('LoanModel')->deleteLoan($data);
 
-                header('Location: ' . BASE_URL . '/staff/loan');
+                header('Location: ' . BASE_URL . '/staff/loan&status=delete_success');
                 exit;
             }
         }
@@ -399,7 +399,7 @@ class Staff extends Controller
                 ];
                 $this->model('ReservationModel')->addNewReservation($data);
 
-                header('Location: ' . BASE_URL . '/staff/reservation');
+                header('Location: ' . BASE_URL . '/staff/reservation&status=add_success');
                 exit;
             }
         }
@@ -430,7 +430,7 @@ class Staff extends Controller
 
                 $this->model('ReservationModel')->deleteReservation($targetedRes['ReservationId']);
 
-                header('Location: ' . BASE_URL . '/staff/reservation');
+                header('Location: ' . BASE_URL . '/staff/reservation&status=delete_success');
                 exit;
             }
         }
@@ -456,7 +456,7 @@ class Staff extends Controller
 
                 $this->model('ReservationModel')->updateReservation($data);
 
-                header('Location: ' . BASE_URL . '/staff/reservation');
+                header('Location: ' . BASE_URL . '/staff/reservation&status=edit_success');
                 exit;
             }
         }
@@ -490,7 +490,7 @@ class Staff extends Controller
                 ];
                 $this->model('FineModel')->paidFine($data);
 
-                header('Location: ' . BASE_URL . '/staff/fine');
+                header('Location: ' . BASE_URL . '/staff/fine&status=mark_success');
                 exit;
             }
         }
@@ -505,7 +505,7 @@ class Staff extends Controller
 
         $this->model('FineModel')->checkOverdueFine();
 
-        header('Location: ' . BASE_URL . '/staff/fine');
+        header('Location: ' . BASE_URL . '/staff/fine&status=check_success');
         exit;
     }
 
@@ -562,6 +562,7 @@ class Staff extends Controller
             $this->model('MailModel')->addNewMail($data);
         }
 
+        header('Location: ' . BASE_URL . '/staff/loan&status=send_success');
     }
 
     public function sendReserveNotif()
@@ -582,7 +583,7 @@ class Staff extends Controller
             $this->model('MailModel')->addNewMail($data);
         }
 
-        header('Location: ' . BASE_URL . '/staff/reservation');
+        header('Location: ' . BASE_URL . '/staff/reservation&status=send_success');
     }
 
     public function sendFineNotif()
@@ -604,6 +605,8 @@ class Staff extends Controller
                 $this->model('MailModel')->addNewMail($data);
             }
         }
+
+        header('Location: ' . BASE_URL . '/staff/fine&status=send_success');
     }
 
     public function logout()
