@@ -72,13 +72,13 @@ class Patron extends Controller
                 $data['targetedBook'][0]['PatronId'] = $data['userID'];
                 $data['targetedBook'][0]['ReservationDate'] = $date;
                 if ($this->model('ReservationModel')->addNewReservation($data['targetedBook'][0])) {
-                    header('Location: ' . BASE_URL . '/patron/reservation?success=true');
+                    header('Location: ' . BASE_URL . '/patron/reservation&status=reserve_success');
                 } else {
-                    header('Location: ' . BASE_URL . '/patron/reservation&error=date_taken');
+                    header('Location: ' . BASE_URL . '/patron/reservation&status=date_taken');
                 }
                 exit;
             } else {
-                header('Location: ' . BASE_URL . '/patron/reservation?success=false');
+                header('Location: ' . BASE_URL . '/patron/reservation&status=failed');
                 exit;
             }
         }

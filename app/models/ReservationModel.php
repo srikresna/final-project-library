@@ -63,12 +63,13 @@ class ReservationModel {
         $patronID = $this->sanitizeInput($data['PatronId']);
         $reservationDate = $this->sanitizeInput($data['ReservationDate']);
     
-        // Check if there is another reservation with the same date
-        $query = "SELECT * FROM $this->table WHERE ReservationDate = :reservationDate";
+        // Check if there is another book that reserve with the same date
+        $query = "SELECT * FROM $this->table WHERE BookId = :BookID AND ReservationDate = :reservationDate";
         $this->connect->query($query);
+        $this->connect->bind('BookID', $bookID);
         $this->connect->bind('reservationDate', $reservationDate);
+        $this->connect->execute();
         $existingReservation = $this->connect->single();
-    
         // If there is another reservation with the same date, return false
         if ($existingReservation) {
             return false;

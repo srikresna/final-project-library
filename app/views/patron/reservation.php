@@ -1,19 +1,14 @@
-<?php
-if (isset($_GET['error']) && $_GET['error'] == "date_taken") {
-    echo "<script>alert('Date is already taken!');</script>";
-}
-?>
 <div class="container">
-<div class="d-flex mt-5">
-    <div class="ms-auto">
-        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#currentLoans" aria-expanded="false" aria-controls="currentLoans">
-            Toggle Current Loans
-        </button>
-        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#reservationHistory" aria-expanded="false" aria-controls="reservationHistory">
-            Toggle Current Reservation
-        </button>
+    <div class="d-flex mt-5">
+        <div class="ms-auto">
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#currentLoans" aria-expanded="false" aria-controls="currentLoans">
+                Toggle Current Loans
+            </button>
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#reservationHistory" aria-expanded="false" aria-controls="reservationHistory">
+                Toggle Current Reservation
+            </button>
+        </div>
     </div>
-</div>
 
     <div class="card mt-3 collapse" id="currentLoans">
         <div class="card-header">
@@ -61,9 +56,30 @@ if (isset($_GET['error']) && $_GET['error'] == "date_taken") {
             </table>
         </div>
     </div>
+
+
     <div class="mt-3">
         <h1 class="fw-bold">Reservation History</h1>
     </div>
+
+    <?php
+    if (isset($_GET['status']) && $_GET['status'] == "date_taken") {
+        echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>Failed!</strong> The date you choose is already taken, please choose another date.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>';
+    } else if (isset($_GET['status']) && $_GET['status'] == "reserve_success") {
+        echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>Success!</strong> Your reservation is added. Come again to the library at the date you choose to take your book.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>';
+    } else if (isset($_GET['status']) && $_GET['status'] == "failed") {
+        echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>Failed!</strong> Something went wrong, please try again.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>';
+    }
+    ?>
     <table class="table table-hover text-center table-striped">
         <thead>
             <tr>
