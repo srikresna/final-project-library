@@ -14,10 +14,12 @@
         body {
             font-family: 'Poppins', sans-serif;
         }
+
         .navbar-nav.right {
             margin-left: auto;
         }
     </style>
+
     <title><?= $data['title']; ?> | Library</title>
 </head>
 
@@ -52,12 +54,33 @@
                         <a class="nav-link" href="<?= BASE_URL; ?>/staff/report">Report</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= BASE_URL; ?>/staff/logout">Logout</a>
+                        <!-- logout -->
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">Log Out</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
+
+
 </body>
+
+<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-body-tertiary">
+            <div class="modal-header">
+                <h5 class="modal-title" id="logoutModalLabel">Log Out Confirmation</h5>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to log out?</p>
+            </div>
+            <div class="modal-footer">
+                <a href="<?= BASE_URL; ?>/staff/logout" class="btn btn-danger">Yes</a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+
+    </div>
+</div>
 
 </html>
