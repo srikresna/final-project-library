@@ -6,7 +6,15 @@
             <h3>Your Loan</h3>
         </div>
     </div>
+    <?php
+    if (isset($_GET['status']) && $_GET['status'] == 'loan_success') {
 
+        echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>Success!</strong> Your request is being process, please come to the library to take your book.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>';
+    }
+    ?>
     <table class="table table-striped table-hover text-center">
         <thead>
             <tr>

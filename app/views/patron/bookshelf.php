@@ -101,7 +101,7 @@
             <div class="modal-body">
                 <!-- Book details will be dynamically inserted here -->
             </div>
-            <form action="<?= BASE_URL; ?>/patron/loan" method="post">
+            <form action="<?= BASE_URL; ?>/patron/loan&status=loan_success" method="post">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <input id="borrow-isbn" type="hidden" name="isbn" value="">
