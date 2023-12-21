@@ -4,7 +4,8 @@ if (isset($_GET['error']) && $_GET['error'] == "date_taken") {
 }
 ?>
 <div class="container">
-    <div class="d-flex justify-content-between mt-5">
+<div class="d-flex mt-5">
+    <div class="ms-auto">
         <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#currentLoans" aria-expanded="false" aria-controls="currentLoans">
             Toggle Current Loans
         </button>
@@ -12,6 +13,7 @@ if (isset($_GET['error']) && $_GET['error'] == "date_taken") {
             Toggle Current Reservation
         </button>
     </div>
+</div>
 
     <div class="card mt-3 collapse" id="currentLoans">
         <div class="card-header">
@@ -22,7 +24,6 @@ if (isset($_GET['error']) && $_GET['error'] == "date_taken") {
                 <thead>
                     <tr>
                         <th>Book Title</th>
-                        <th>Borrower</th>
                         <th>Due Date</th>
                     </tr>
                 </thead>
@@ -30,7 +31,6 @@ if (isset($_GET['error']) && $_GET['error'] == "date_taken") {
                     <?php foreach ($data['loaned'] as $loaned) : ?>
                         <tr>
                             <td><?php echo $loaned['Title']; ?></td>
-                            <td><?php echo $loaned['FirstName']; ?></td>
                             <td><?php echo $loaned['DueDate']; ?></td>
                         </tr>
                     <?php endforeach; ?>
@@ -47,7 +47,6 @@ if (isset($_GET['error']) && $_GET['error'] == "date_taken") {
                 <thead>
                     <tr>
                         <th>Book Title</th>
-                        <th>Reservator</th>
                         <th>Reservation Date</th>
                     </tr>
                 </thead>
@@ -55,7 +54,6 @@ if (isset($_GET['error']) && $_GET['error'] == "date_taken") {
                     <?php foreach ($data['active_reserve'] as $active) : ?>
                         <tr>
                             <td><?php echo $active['Title']; ?></td>
-                            <td><?php echo $active['FirstName']; ?></td>
                             <td><?php echo $active['ReservationDate']; ?></td>
                         </tr>
                     <?php endforeach; ?>
@@ -74,12 +72,18 @@ if (isset($_GET['error']) && $_GET['error'] == "date_taken") {
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($data['reserve'] as $userReserve) : ?>
-                <tr>
-                    <td><?php echo $userReserve['Title']; ?></td>
-                    <td><?php echo $userReserve['ReservationDate']; ?></td>
-                </tr>
-            <?php endforeach; ?>
+            <?php
+            if (count($data['reserve']) == 0) {
+                echo '<tr><td colspan="2">No reservations found.</td></tr>';
+            } else {
+                foreach ($data['reserve'] as $reserve) {
+                    echo '<tr>';
+                    echo '<td>' . $reserve['Title'] . '</td>';
+                    echo '<td>' . $reserve['ReservationDate'] . '</td>';
+                    echo '</tr>';
+                }
+            }
+            ?>
         </tbody>
     </table>
     <div class="text-center">

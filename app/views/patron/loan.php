@@ -19,15 +19,21 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($data['loans'] as $loan) : ?>
-                <tr>
-                    <td><?php echo $loan['ISBN']; ?></td>
-                    <td><?php echo $loan['Title']; ?></td>
-                    <td><?php echo $loan['LoanDate']; ?></td>
-                    <td><?php echo $loan['DueDate']; ?></td>
-                    <td><?php echo $loan['ReturnDate']; ?></td>
-                </tr>
-            <?php endforeach; ?>
+            <?php
+            if (count($data['loans']) == 0) {
+                echo '<tr><td colspan="5">No loan found.</td></tr>';
+            } else {
+                foreach ($data['loans'] as $loan) {
+                    echo '<tr>';
+                    echo '<td>' . $loan['ISBN'] . '</td>';
+                    echo '<td>' . $loan['Title'] . '</td>';
+                    echo '<td>' . $loan['LoanDate'] . '</td>';
+                    echo '<td>' . $loan['DueDate'] . '</td>';
+                    echo '<td>' . $loan['ReturnDate'] . '</td>';
+                    echo '</tr>';
+                }
+            }
+            ?>
         </tbody>
     </table>
 </div>
