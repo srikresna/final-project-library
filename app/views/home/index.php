@@ -72,7 +72,7 @@
 
     <section>
         <div class="info-text">
-            <p>Welcome to the Library, your modern hub for knowledge and exploration. Immerse yourself in a diverse collection of books, discover new titles, and elevate your learning experience. Reserve your favorite books online and pick them up at your convenience.</p>
+            <p>Welcome to the Halmahera Library, your modern hub for knowledge and exploration. Immerse yourself in a diverse collection of books, discover new titles, and elevate your learning experience. Reserve your favorite books online and pick them up at your convenience.</p>
             <p>Our flexible loan services empower you to borrow books and materials, ensuring you have access to the resources you need. Stay informed about the latest library information, events, and services.</p>
         </div>
 
@@ -95,7 +95,7 @@
     </section>
 
     <footer>
-        <p>&copy; 2023 Library Name. All rights reserved.</p>
+        <p>&copy; 2023 Library Halmahera. All rights reserved.</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
